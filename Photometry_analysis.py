@@ -334,7 +334,7 @@ TDTfiles_thph_hab = ['thph1-3_distraction2',\
                 'thph2-7_habituation'] #['thph1-1_distraction2','thph1-2_distraction2',
 
 
-TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 2018/THPH matfiles/'
+TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 2018/THPH matfiles'
 
 savepath = '/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures'
 
