@@ -48,7 +48,7 @@ def distractionrasterFig(ax, timelock, events,
             
         #else:
          #   ax.scatter(xvals, yvals, marker='.', color='k')
-        ax.scatter(xvals, yvals, marker='.', color='k')
+        ax.scatter(xvals, yvals, marker=',',s=2,color='k')
         
         
        
@@ -68,10 +68,10 @@ for tupl in indices1:
         pdp = (examplerat['licks'][i+1] - examplerat['licks'][i])
         pdps.append(pdp)    
 
-# Check the PDPs first one is very long?Yes it it 
+# Check the PDPs first one is very long?Yes it is 
 #
 pdps.append(0)        
-figure12 = plt.figure(figsize=(6,3))
+figure12 = plt.figure(figsize=(6,6))
 ax6 = plt.subplot(111)
 ax6.spines['right'].set_visible(False)
 ax6.xaxis.set_visible(False)
@@ -88,5 +88,19 @@ scalebarx = [ax6.get_xlim()[1] - scalebar, ax6.get_xlim()[1]]
 ax6.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
 ax6.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size) 
 
-rasterPlot = distractionrasterFig(ax6, examplerat['distractors'], examplerat['licks'], pre=1, post=10, sortevents=None, sortdirection='dec')
+rasterPlot = distractionrasterFig(ax6, examplerat['distractors'], examplerat['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
 #figure12.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/RasterLickDay2.3.pdf') 
+
+#
+#
+#Make plots for every rat on lick day, distraction day and habituation day
+#Choose the best lookng representative rat for the ordered, non ordered (by time)
+#Make the dots where it is distracted a different colour (this was added into a previous script)
+#Sort out the spacing issues (talk to Jaime perhaps) - replace with a different marker or something 
+#    Could make the plots as large as possible 
+#    Think about issues of different scales on (1) Different days and (2) Different rats 
+#    Consider using ',' rather than '.' (a pixel and not a dot)
+#    
+#   s = 1  
+    
+    
