@@ -113,20 +113,20 @@ def distractionrasterFig(ax, timelock, events,
 #            
 #            
     for ith, trial in enumerate(rasterData): 
-        xvals = [x for x in trial]  
+        xvals = [x for x in trial]  ## ADD IN THE IF THE SORTEVENT IS <1
+        
         yvals = [1+ith] * len(xvals)
         
-       
-        
+        print(xvals)
+    
         #if ith<40:  # 26 if ascending --> MANUALLY CHECKED? --> could check the len of PDP if not ordered
             #ax.scatter(xvals, yvals, marker='.', color='b')
             
         #else:
          #   ax.scatter(xvals, yvals, marker='.', color='k')
         ax.scatter(xvals, yvals, marker=',',s=2,color='k')
-        
-        
-       
+        ax.scatter(xvals2, yvals2, marker=',', s=2, color='blue')
+              
        
 # produces the index in the lick data where the distractor was (indices1)
 # now use these indices to add one and subtract the VALUE at index+1 from the VALUE at index
@@ -184,9 +184,12 @@ rasterPlot = distractionrasterFig(ax6, examplerat['distractors'], examplerat['li
 #Check the lengths of PDPs list and the  
 
 
-for index, value in enumerate(pdps):
+for index, value in enumerate(pdps): # change this for the SORTEVE
     if value < 1:
         print(value)
+        
+
+
         
         
 How to get the NON sorted lengths of PDPs one by one, with a logical index 
