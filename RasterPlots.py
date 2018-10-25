@@ -5,6 +5,65 @@ Created on Sat Oct 20 21:17:27 2018
 
 @author: u1490431
 """
+
+# Post distraction pause rater plot 
+
+def distractionrasterFig(ax, timelock, events,
+                         pre = 1, post = 1,
+                         sortevents=None, sortdirection='ascending'):
+
+    if sortevents != None:
+        if len(timelock) != len(sortevents):
+            print('Length of sort events does not match timelock events; no sorting')
+        else:
+            if sortdirection == 'ascending':
+                sortOrder = np.argsort(sortevents)
+            else:
+                sortOrder = np.argsort(sortevents)[::-1]
+                
+            timelock = [timelock[i] for i in sortOrder]
+    
+    rasterData = [[] for i in timelock]
+    
+    for i,x in enumerate(timelock):
+        rasterData[i] = [j-x for j in events if (j > x-pre) & (j < x+post)]
+
+#    for ith, trial in enumerate(rasterData):
+#        if ith < 26:
+# 
+#            ax.vlines(trial, ith + .5, ith + 1.5)
+#        else:
+#            ax.vlines(trial, ith + .5, ith + 1.5, color='blue')
+#   
+
+# Works out how many of the trials are distracted (pauses longer than 1 sec in sortevents)            
+    count = 0
+    for a, b in enumerate(sortevents):
+        if b > 1:
+            count += 1
+
+    print(count)
+    for ith, trial in enumerate(rasterData):
+        
+
+              
+        xvals = [x for x in trial]  ## ADD IN THE IF THE SORTEVENT IS <1
+        yvals = [1+ith] * len(xvals)
+         #   ax.scatter(xvals, yvals, marker=',',s=2,color='k')   
+        
+#        if sortevents[ith-1] > 1:
+#            xvals = [x for x in trial]  ## ADD IN THE IF THE SORTEVENT IS <1
+#            yvals = [1+ith] * len(xvals)          
+         #   ax.scatter(xvals, yvals, marker=',', s=2, color='blue')
+  
+      #### If ...   
+        
+        if ith < count:  # 26 if ascending --> MANUALLY CHECKED? --> could check the len of PDP if not ordered
+            ax.scatter(xvals, yvals, marker=',', s=2, color='r')
+     
+        else:
+            ax.scatter(xvals, yvals, marker=',', s=2, color='k')
+
 # Taken from Ch4 analysis_licking - currently contains a lot of redundant code 
 
 # On licking day (modelled distractors --> all rats)
@@ -39,7 +98,7 @@ for filename in TDTfiles_thph_lick:
     allRatDistractorsMOD.append(ratdata['distractors'])
     allRatDistractedMOD.append(ratdata['distracted'])
     allRatNotDistractedMOD.append(ratdata['notdistracted'])
-    print(ratdata['distractors'])
+  #  print(ratdata['distractors'])
 
 
 
@@ -82,51 +141,8 @@ for filename in TDTfiles_thph_lick:
     #figure12.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/RasterLickDay2.3.pdf') 
         
 
-# Post distraction pause rater plot 
 
-def distractionrasterFig(ax, timelock, events,
-                         pre = 1, post = 1,
-                         sortevents=None, sortdirection='ascending'):
-
-    if sortevents != None:
-        if len(timelock) != len(sortevents):
-            print('Length of sort events does not match timelock events; no sorting')
-        else:
-            if sortdirection == 'ascending':
-                sortOrder = np.argsort(sortevents)
-            else:
-                sortOrder = np.argsort(sortevents)[::-1]
-                
-            timelock = [timelock[i] for i in sortOrder]
     
-    rasterData = [[] for i in timelock]
-    
-    for i,x in enumerate(timelock):
-        rasterData[i] = [j-x for j in events if (j > x-pre) & (j < x+post)]
-
-#    for ith, trial in enumerate(rasterData):
-#        if ith < 26:
-# 
-#            ax.vlines(trial, ith + .5, ith + 1.5)
-#        else:
-#            ax.vlines(trial, ith + .5, ith + 1.5, color='blue')
-#            
-#            
-    for ith, trial in enumerate(rasterData): 
-        xvals = [x for x in trial]  ## ADD IN THE IF THE SORTEVENT IS <1
-        
-        yvals = [1+ith] * len(xvals)
-        
-        print(xvals)
-    
-        #if ith<40:  # 26 if ascending --> MANUALLY CHECKED? --> could check the len of PDP if not ordered
-            #ax.scatter(xvals, yvals, marker='.', color='b')
-            
-        #else:
-         #   ax.scatter(xvals, yvals, marker='.', color='k')
-        ax.scatter(xvals, yvals, marker=',',s=2,color='k')
-        ax.scatter(xvals2, yvals2, marker=',', s=2, color='blue')
-              
        
 # produces the index in the lick data where the distractor was (indices1)
 # now use these indices to add one and subtract the VALUE at index+1 from the VALUE at index
@@ -189,11 +205,3 @@ for index, value in enumerate(pdps): # change this for the SORTEVE
         print(value)
         
 
-
-        
-        
-How to get the NON sorted lengths of PDPs one by one, with a logical index 
-THEN use the 0/1 to determine which colour to draw the plots
-
-For index and value in the sortevents, is value < 1 do the plotting as
-usual, if value > 1 make the plot a different colour (could add as a parameter)
