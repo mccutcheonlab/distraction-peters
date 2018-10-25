@@ -839,7 +839,7 @@ for filename in TDTfiles_thph_dis:
     ax6.spines['bottom'].set_visible(False)
     ax6.set(ylabel = 'Trials')
     ax6.yaxis.label.set_size(14)
-    distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents='yes', sortdirection='dec')
+#    distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents='yes', sortdirection='dec')
     
 
 for i, val in enumerate(allRatDistractors):
