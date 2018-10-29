@@ -6,8 +6,6 @@ Created on Sat Oct 20 21:17:27 2018
 @author: u1490431
 """
 
-# Post distraction pause rater plot 
-
 def distractionrasterFig(ax, timelock, events,
                          pre = 1, post = 1,
                          sortevents=None, sortdirection='ascending'):
@@ -43,36 +41,20 @@ def distractionrasterFig(ax, timelock, events,
     for i,x in enumerate(timelock):
         rasterData[i] = [j-x for j in events if (j > x-pre) & (j < x+post)]
  
-
-# Works out how many of the trials are distracted (pauses longer than 1 sec in sortevents)            
-    count = 0
-    for a, b in enumerate(sortevents):
-        if b > 1:
-            count += 1
-
     
     for ith, trial in enumerate(rasterData):
+
         xvals = [x for x in trial] 
         yvals = [1+ith] * len(xvals)
-
-# if sorted events != None 
-        if ith < count:  # 26 if ascending --> MANUALLY CHECKED? --> could check the len of PDP if not ordered
-            ax.scatter(xvals, yvals, marker=',', s=1, color='r')
-     
-        else:
+        
+        pdplist = [lick for lick in xvals if lick > 0 and lick < 1]
+        if len(pdplist) > 0:
             ax.scatter(xvals, yvals, marker=',', s=1, color='k')
+            print('there is a pdp')
+        else:
+            ax.scatter(xvals, yvals, marker=',', s=1, color='r')
+            print('no pdp')
 
-# else:
-    
-
-# Taken from Ch4 analysis_licking - currently contains a lot of redundant code 
-
-# On licking day (modelled distractors --> all rats)
-
-# On distraction day (real distractors)
-# On habituation day (real distractors but less distracted)
-
-# Ordered then not ordered (check how you will change the colours)
  
 ### SORTED PLOTS HERE - MODELLED DAY, DISTRACTION DAY, HABITUATION DAY 
 
@@ -205,7 +187,7 @@ for filename in TDTfiles_thph_dis:
     ax6.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
     ax6.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size) 
     
-    rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
+    rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=None, sortdirection='dec')
 
     figure12.savefig('/Volumes/KP_HARD_DRI/distraction_paper/figs/Raster_' + filename + '.pdf', bbox_inches='tight') 
 
