@@ -134,8 +134,7 @@ for filename in TDTfiles_thph_lick:
     
     rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
 
-#    fig12.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
-
+    figure12.savefig('/Volumes/KP_HARD_DRI/distraction_paper/figs/Raster_' + filename + '.pdf', bbox_inches='tight') 
 
 #
 #Make plots for every rat on lick day, distraction day and habituation day
@@ -208,6 +207,8 @@ for filename in TDTfiles_thph_dis:
     
     rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
 
+    figure12.savefig('/Volumes/KP_HARD_DRI/distraction_paper/figs/Raster_' + filename + '.pdf', bbox_inches='tight') 
+
 allRatBlue = []
 allRatUV = []
 allRatFS = []
@@ -269,4 +270,5 @@ for filename in TDTfiles_thph_hab:
     
     rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
 
+    figure12.savefig('/Volumes/KP_HARD_DRI/distraction_paper/figs/Raster_' + filename + '.pdf', bbox_inches='tight') 
 
