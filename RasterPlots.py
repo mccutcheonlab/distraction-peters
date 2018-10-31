@@ -6,6 +6,10 @@ Created on Sat Oct 20 21:17:27 2018
 @author: u1490431
 """
 
+## CURRENTLY NEED TO RUN CH4_ANALYSIS_LICKING FIRST to extract the data 
+## And AllFunctions 
+
+
 def distractionrasterFig(ax, timelock, events,
                          pre = 1, post = 1,
                          sortevents=None, sortdirection='ascending'):
@@ -50,10 +54,10 @@ def distractionrasterFig(ax, timelock, events,
         pdplist = [lick for lick in xvals if lick > 0 and lick < 1]
         if len(pdplist) > 0:
             ax.scatter(xvals, yvals, marker=',', s=1, color='k')
-            print('there is a pdp')
+         #   print('there is a pdp')
         else:
             ax.scatter(xvals, yvals, marker=',', s=1, color='r')
-            print('no pdp')
+         #   print('no pdp')
 
  
 ### SORTED PLOTS HERE - MODELLED DAY, DISTRACTION DAY, HABITUATION DAY 
@@ -114,7 +118,7 @@ for filename in TDTfiles_thph_lick:
     ax6.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
     ax6.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size) 
     
-    rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
+    rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=None, sortdirection='dec') # sortevents = pdps      
 
     figure12.savefig('/Volumes/KP_HARD_DRI/distraction_paper/figs/Raster_' + filename + '.pdf', bbox_inches='tight') 
 
@@ -250,7 +254,7 @@ for filename in TDTfiles_thph_hab:
     ax6.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
     ax6.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size) 
     
-    rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=pdps, sortdirection='dec')
+    rasterPlot = distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents=None, sortdirection='dec')
 
     figure12.savefig('/Volumes/KP_HARD_DRI/distraction_paper/figs/Raster_' + filename + '.pdf', bbox_inches='tight') 
 
