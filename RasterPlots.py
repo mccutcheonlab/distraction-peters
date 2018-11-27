@@ -63,6 +63,22 @@ def distractionrasterFig(ax, timelock, events,
 ### SORTED PLOTS HERE - MODELLED DAY, DISTRACTION DAY, HABITUATION DAY 
 
 ## lick day (modelled distractors) 
+allRatBlue = []
+allRatUV = []
+allRatFS = []
+allRatLicks = []
+allRatDistractors = []
+allRatDistracted = []
+allRatNotDistracted = []
+blueMeans_distractor = []
+uvMeans_distractor = [] 
+blueMeans_distracted = []
+uvMeans_distracted = []
+blueMeans_notdistracted = []
+uvMeans_notdistracted = [] 
+allbluesnips = []
+alluvsnips = []
+pdps_lickday = []
 
 for filename in TDTfiles_thph_lick:
     
@@ -99,7 +115,7 @@ for filename in TDTfiles_thph_lick:
             
             pdp = (ratdata['licks'][i+1] - ratdata['licks'][i])
             pdps.append(pdp)    
-    
+    pdps_lickday.append(pdps)
    # pdps.append(0) ## Add in a check, if PDPs len does not equal len(distractors)
     figure12 = plt.figure(figsize=(6,6))
     ax6 = plt.subplot(111)
@@ -147,6 +163,7 @@ blueMeans_notdistracted = []
 uvMeans_notdistracted = [] 
 allbluesnips = []
 alluvsnips = []
+pdps_disday = []
 
 for filename in TDTfiles_thph_dis:
     
@@ -171,7 +188,8 @@ for filename in TDTfiles_thph_dis:
         if i+1 < len(ratdata['licks']):
             
             pdp = (ratdata['licks'][i+1] - ratdata['licks'][i])
-            pdps.append(pdp)    
+            pdps.append(pdp) 
+    pdps_disday.append(pdps)
     
    # pdps.append(0) ## Add in a check, if PDPs len does not equal len(distractors)
     figure12 = plt.figure(figsize=(6,6))
@@ -210,6 +228,7 @@ blueMeans_notdistracted = []
 uvMeans_notdistracted = [] 
 allbluesnips = []
 alluvsnips = []
+pdps_habday = []
 
 for filename in TDTfiles_thph_hab:
     
@@ -234,8 +253,8 @@ for filename in TDTfiles_thph_hab:
         if i+1 < len(ratdata['licks']):
             
             pdp = (ratdata['licks'][i+1] - ratdata['licks'][i])
-            pdps.append(pdp)    
-    
+            pdps.append(pdp)
+    pdps_habday.append(pdps)
    # pdps.append(0) ## Add in a check, if PDPs len does not equal len(distractors)
     figure12 = plt.figure(figsize=(6,6))
     ax6 = plt.subplot(111)
