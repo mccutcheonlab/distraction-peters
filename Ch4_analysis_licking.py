@@ -456,7 +456,7 @@ trialsMultShadedFig(ax, [np.asarray(uvMeansRuns[2:]),np.asarray(blueMeansRuns)],
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
 
-
+'''
 ## Shows every single trial for each rat for runs - to choose representative sample
 #for index, sniplist in enumerate(allbluesnips):
 #    for ind, lis in enumerate(sniplist):
@@ -598,7 +598,7 @@ ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
 ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
 #f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_SCALE.pdf',  bbox_inches="tight")
 
-
+'''
 ###########################################################################################
 
 # Long and short runs, 25th and 75th percentiles 
