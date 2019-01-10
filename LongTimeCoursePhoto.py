@@ -46,7 +46,7 @@ Created on Wed Jan  9 19:09:07 2019
 fig9 = plt.figure(figsize=(12,2))
 ax7 = plt.subplot(1,1,1)
 plt.plot(allRatBlue[3], color='royalblue')
-plt.plot(allRatUV[3], color='darkorchid')
+plt.plot(allRatUV[3] - 100, color='darkorchid') ### OFFSET THE UV 
 ax7.set_xticks([0,(10*60*allRatFS[0]),(20*60*allRatFS[0]),(30*60*allRatFS[0]),(40*60*allRatFS[0]),(50*60*allRatFS[0]),(60*60*allRatFS[0])] )
 ax7.set_xticklabels([0,10,20,30,40,50,60])
 ax7.set_xlabel('Mins', fontsize=14)
