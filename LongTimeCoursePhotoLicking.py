@@ -42,7 +42,6 @@ Created on Wed Jan  9 19:09:07 2019
 ### Could plot all the rats as 1hr then as 30 mins to see which rat to use for long time course 
         
 # RAT3 - 10 minutes 
-
 fig9 = plt.figure(figsize=(12,2))
 ax7 = plt.subplot(1,1,1)
 plt.plot(allRatBlue[3], color='royalblue')
@@ -54,8 +53,6 @@ ax7.set_xlabel('Mins', fontsize=14)
 ax7.set_xlim([122070.31494140625,732421.8896484375]) # 2 mins to 12 mins, a 10 min snip without noise at start
 ax7.set_ylim([400,800])
 
-# Adding the scatter to long time course plot of photo signals
-#allRatLicks.append(ratdata['licks'])
 multipliedLicks = []
 for element in allRatLicks[3]:
     multElement = element*allRatFS[0]
@@ -64,9 +61,6 @@ for element in allRatLicks[3]:
 xvals = multipliedLicks
 yvals = [ax7.get_ylim()[1] - 10] * len(xvals)
 ax7.scatter(xvals, yvals, marker='|', color='k', linewidth=0.2)
-
-# Get rid of the spines and add labels and ticks to plot 
-# Add a 1 minute scale bar OR tick labels for mins 
 ax7.set(ylabel = '∆F')
 ax7.yaxis.label.set_size(14)
 ax7.xaxis.set_visible(False)
@@ -82,7 +76,8 @@ ax7.spines['right'].set_visible(False)
 ax7.spines['top'].set_visible(False)
 ax7.spines['bottom'].set_visible(False)
 #fig9.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/LongTimeCourse.pdf', bbox_inches="tight") 
-        
+fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/PLongTimeCourseRat3_10min.pdf', bbox_inches="tight") 
+       
 
 ## RAT 12
 #fig9 = plt.figure(figsize=(12,2))
@@ -172,7 +167,7 @@ ax7.spines['right'].set_visible(False)
 ax7.spines['top'].set_visible(False)
 ax7.spines['bottom'].set_visible(False)
 #fig9.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/LongTimeCourse.pdf', bbox_inches="tight") 
-        
+fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/PLongTimeCourseRat3_30sec(1).pdf', bbox_inches="tight")        
 ### RAT 3 ZOOMED SECITON
 #fig9 = plt.figure(figsize=(4,2))
 #ax7 = plt.subplot(1,1,1)
@@ -261,10 +256,7 @@ scalebarx = [ax7.get_xlim()[1] - scalebar, ax7.get_xlim()[1]]
 ax7.spines['right'].set_visible(False)
 ax7.spines['top'].set_visible(False)
 ax7.spines['bottom'].set_visible(False)
-#fig9.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/LongTimeCourse.pdf', bbox_inches="tight") 
-        
-
-#
+fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/PLongTimeCourseRat3_30sec(2).pdf', bbox_inches="tight") 
 ### RAT 12 ZOOMED SECTION 
 #
 ## RAT 12
