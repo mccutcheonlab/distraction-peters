@@ -62,7 +62,7 @@ for element in allRatLicks[3]:
     multipliedLicks.append([multElement])
     
 xvals = multipliedLicks
-yvals = [ax7.get_ylim()[1] - 100] * len(xvals)
+yvals = [ax7.get_ylim()[1] - 10] * len(xvals)
 ax7.scatter(xvals, yvals, marker='|', color='k', linewidth=0.2)
 
 # Get rid of the spines and add labels and ticks to plot 
