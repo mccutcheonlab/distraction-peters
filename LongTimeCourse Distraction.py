@@ -138,18 +138,33 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_distracted),np.asarray(blueMeans_dis
 fig9 = plt.figure(figsize=(12,2))
 ax7 = plt.subplot(1,1,1)
 plt.plot(allRatBlue[10], color='royalblue')
-plt.plot(allRatUV[10] - 130, color='darkorchid') ### OFFSET THE UV 
+plt.plot(allRatUV[10] + 150, color='darkorchid') ### OFFSET THE UV 
 ax7.set_xticks([0,(10*60*allRatFS[0]),(20*60*allRatFS[0]),(30*60*allRatFS[0]),(40*60*allRatFS[0]),(50*60*allRatFS[0]),(60*60*allRatFS[0])] )
 ax7.set_xticklabels([0,10,20,30,40,50,60])
 ax7.set_xlabel('Mins', fontsize=14)
 #ax7.set_xlim([500000,700000]) # looks really nice scale wise, approx 3 mins
-ax7.set_xlim([122070.31494140625,732421.8896484375]) # 2 mins to 12 mins, a 10 min snip without noise at start
-ax7.set_ylim([400,800])
+
+## FIRSRT 10 MINS
+#ax7.set_xlim([122070.31494140625,732421.8896484375]) # 2 mins to 12 mins, a 10 min snip without noise at start
+# Second 10 mins 
+ax7.set_xlim([122070.31494140625,1220703.1494140625]) # 2 mins to 12 mins, a 10 min snip without noise at start
+
+ax7.set_ylim([500,900])
 
 multipliedLicks = []
 for element in allRatLicks[10]:
     multElement = element*allRatFS[0]
     multipliedLicks.append([multElement])
+    
+multipliedDistractors = []
+for element in allRatDistractors[10]:
+    multElement = element*allRatFS[0]
+    multipliedDistractors.append([multElement])  
+    
+multipliedDistracted = []
+for element in allRatDistracted[10]:
+    multElement = element*allRatFS[0]
+    multipliedDistracted.append([multElement])  
     
 xvals = multipliedLicks
 yvals = [ax7.get_ylim()[1] - 10] * len(xvals)
@@ -157,6 +172,23 @@ ax7.scatter(xvals, yvals, marker='|', color='k', linewidth=0.2)
 ax7.set(ylabel = '∆F')
 ax7.yaxis.label.set_size(14)
 ax7.xaxis.set_visible(False)
+
+
+xvals = multipliedDistractors
+yvals = [ax7.get_ylim()[1] - 40] * len(xvals)
+ax7.scatter(xvals, yvals, marker='o', color='k', linewidth=0.2)
+ax7.set(ylabel = '∆F')
+ax7.yaxis.label.set_size(14)
+ax7.xaxis.set_visible(False)
+
+xvals = multipliedDistracted
+yvals = [ax7.get_ylim()[1] - 40] * len(xvals)
+ax7.scatter(xvals, yvals, marker='o', color='r', linewidth=0.2)
+ax7.set(ylabel = '∆F')
+ax7.yaxis.label.set_size(14)
+ax7.xaxis.set_visible(False)
+
+
             
 scalebar = 1*allRatFS[0]*60 # 1 minute
 
@@ -173,7 +205,80 @@ ax7.spines['bottom'].set_visible(False)
        
 
 
+### Short time course 
 
+# RAT3 - 10 minutes  (value zero is rat3 here as 1 and 2 deleted in distraciton)
+fig9 = plt.figure(figsize=(4,2))
+ax7 = plt.subplot(1,1,1)
+plt.plot(allRatBlue[10], color='royalblue')
+plt.plot(allRatUV[10] + 160, color='darkorchid') ### OFFSET THE UV 
+ax7.set_xticks([0,(10*60*allRatFS[0]),(20*60*allRatFS[0]),(30*60*allRatFS[0]),(40*60*allRatFS[0]),(50*60*allRatFS[0]),(60*60*allRatFS[0])] )
+ax7.set_xticklabels([0,10,20,30,40,50,60])
+ax7.set_xlabel('Mins', fontsize=14)
+#ax7.set_xlim([500000,700000]) # looks really nice scale wise, approx 3 mins
+
+## FIRSRT 10 MINS
+#ax7.set_xlim([122070.31494140625,732421.8896484375]) # 2 mins to 12 mins, a 10 min snip without noise at start
+# Second 10 mins 
+ax7.set_xlim([396728.5235595703,518798.83850097656]) # 2 mins to 12 mins, a 10 min snip without noise at start
+
+ax7.set_ylim([500,800])
+
+multipliedLicks = []
+for element in allRatLicks[10]:
+    multElement = element*allRatFS[0]
+    multipliedLicks.append([multElement])
+    
+multipliedDistractors = []
+for element in allRatDistractors[10]:
+    multElement = element*allRatFS[0]
+    multipliedDistractors.append([multElement])  
+    
+multipliedDistracted = []
+for element in allRatDistracted[10]:
+    multElement = element*allRatFS[0]
+    multipliedDistracted.append([multElement])  
+    
+xvals = multipliedLicks
+yvals = [ax7.get_ylim()[1] - 10] * len(xvals)
+ax7.scatter(xvals, yvals, marker='|', color='k', linewidth=0.2)
+ax7.set(ylabel = '∆F')
+ax7.yaxis.label.set_size(14)
+ax7.xaxis.set_visible(False)
+
+
+xvals = multipliedDistractors
+yvals = [ax7.get_ylim()[1] - 40] * len(xvals)
+ax7.scatter(xvals, yvals, marker='o', color='k', linewidth=0.2)
+ax7.set(ylabel = '∆F')
+ax7.yaxis.label.set_size(14)
+ax7.xaxis.set_visible(False)
+
+xvals = multipliedDistracted
+yvals = [ax7.get_ylim()[1] - 40] * len(xvals)
+ax7.scatter(xvals, yvals, marker='o', color='r', linewidth=0.2)
+ax7.set(ylabel = '∆F')
+ax7.yaxis.label.set_size(14)
+ax7.xaxis.set_visible(False)
+
+
+            
+scalebar = 1*allRatFS[0]*60 # 1 minute
+
+yrange = ax7.get_ylim()[1] - ax7.get_ylim()[0]
+scalebary = (yrange / 10) + ax7.get_ylim()[0]
+scalebarx = [ax7.get_xlim()[1] - scalebar, ax7.get_xlim()[1]]
+ax7.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
+ax7.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), '1 Min', ha='center',va='top', **Calibri, **Size)
+ax7.spines['right'].set_visible(False)
+ax7.spines['top'].set_visible(False)
+ax7.spines['bottom'].set_visible(False)
+#fig9.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/LongTimeCourse.pdf', bbox_inches="tight") 
+#fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/PLongTimeCourseRat3_10min.pdf', bbox_inches="tight") 
+       
+
+
+## then individual trials 
 
 
 
