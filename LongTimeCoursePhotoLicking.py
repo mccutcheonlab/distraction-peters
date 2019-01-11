@@ -6,6 +6,21 @@ Created on Wed Jan  9 19:09:07 2019
 @author: kate
 """
 
+
+'''
+
+MAKE 
+SURE
+THAT 
+YOU HAVE RUN 
+THE CORRECT BLUE AND UV 
+SIGNALS (LICKING - 14 RATS) 
+AND 
+NOT 
+DISTRACTION / MODELLED OR HABITUATION
+
+'''
+
 ## Functions and code to creat the long time course figures for distraction paper
 
 # Step 1 - run the all functions file 
