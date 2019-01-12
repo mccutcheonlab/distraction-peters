@@ -356,6 +356,7 @@ allRatUV = []
 allRatFS = []
 allRatLicks = []
 
+
 for filename in TDTfiles_thph_lick:
     
     file = TDTfilepath + filename
@@ -457,6 +458,9 @@ ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeansRuns[2:]),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
+# PLOTS BLUE LINE TWICE (JAN19)
+
+
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
 
 '''
@@ -1381,10 +1385,11 @@ for i, val in enumerate(allRatDistractorsHAB):
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+#trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Habituation_Distractors_All_Rats.pdf', bbox_inches="tight")
+trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorHAB), np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['blue','blue'], errorcolor = ['lightblue','lightblue'], scale=0)
 
 
 
@@ -1422,7 +1427,7 @@ for i, val in enumerate(allRatDistractedHAB):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedHAB),np.asarray(blueMeans_distractedHAB)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1462,6 +1467,10 @@ fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedHAB),np.asarray(blueMeans_notdistractedHAB)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+
+## PLOTS BLUE LINE TWICE 
+#trialsMultShadedFig(ax, [np.asarray(blueMeans_notdistractedHAB), np.asarray(blueMeans_notdistractedHAB)], ppsBlue, eventText='Not Distracted trial', linecolor = ['blue', 'blue'], errorcolor = ['lightblue', 'lightblue'], scale=0)
+
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
@@ -1476,3 +1485,52 @@ peak_distractedHAB, t_distractedHAB, pre_distractedHAB, post_distractedHAB, base
 # Not distracted 
 peak_notdistractedHAB, t_notdistractedHAB, pre_notdistractedHAB, post_notdistractedHAB, baseline_notdistractedHAB = PhotoPeaksCalc(bkgnd_sub_Notdistracted_HAB)
 
+
+
+## Plots with MULTIPLE EVENTS ON SIGNLE PLOT
+'''
+lick
+np.asarray(blueMeansRuns)
+dis
+np.asarray(blueMeans_distractor)
+distractecd
+np.asarray(blueMeans_distracted)
+notdis
+np.asarray(blueMeans_notdistracted)
+mod
+np.asarray(blueMeans_distractorMOD)
+dis 
+np.asarray(blueMeans_distractor)
+dis 
+np.asarray(blueMeans_distractor)
+hab
+'''
+
+
+## Put this code at the bottome of ch4 licking analysis code
+
+## Licking and distractor
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+#ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(blueMeansRuns), np.asarray(blueMeans_distractor)], ppsBlue, eventText='Event', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+
+
+# Distracted and not distracted
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+#ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(blueMeans_distracted), np.asarray(blueMeans_notdistracted)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+
+# Modelled and distraction day
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+#ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorMOD),np.asarray(blueMeans_distractor) ], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+
+# Distraction day and habituation day 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+#ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(blueMeans_distractor), np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+     
