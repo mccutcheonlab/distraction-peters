@@ -408,6 +408,9 @@ for i, val in enumerate(allRunTimes):
     threshold = 1
     sigSum = [np.sum(abs(i)) for i in blueSnips]
     noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+    
+    blueSnips = zscore(blueSnips)
+    uvSnips = zscore(uvSnips)
 
 #     Might not need the noise index, this is just for trials fig 
     
@@ -450,8 +453,8 @@ for i, val in enumerate(allRunTimes):
 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
+#ax.set_ylim([-0.03, 0.03])
+#ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeansRuns[2:]),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
@@ -687,6 +690,8 @@ for i, val in enumerate(lowerqRunTimes):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
+        blueSnips = zscore(blueSnips)
+        uvSnips = zscore(uvSnips)
     except: 
         pass
 #    
@@ -716,8 +721,8 @@ MergedRunList_Short = list(itertools.chain.from_iterable(lowerqRunTimes))
 #linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
+#ax.set_ylim([-0.03, 0.03])
+#ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_short_run),np.asarray(blueMeans_short_run)], ppsBlue, eventText='First Lick in Short Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList_Short)) + ' Short Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Short_Runs_All_Rats.pdf', bbox_inches="tight")
@@ -739,6 +744,8 @@ for i, val in enumerate(uppqRunTimes):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
+        blueSnips = zscore(blueSnips)
+        uvSnips = zscore(uvSnips)
     except: 
         pass
     
@@ -765,20 +772,20 @@ MergedRunList_Long = list(itertools.chain.from_iterable(uppqRunTimes))
 # Average of all SHORT runs, all rats, all trials 
 ## Mean of ALL SHORT runs and ALL rats on multishaded figure
 
-# Not sure how to turn the scale off here (removed ppsBlue)
-#linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
-fig = plt.figure(figsize=(6,3))
-ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
-trialsMultShadedFig(ax, [np.asarray(uvMeans_long_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText='First Lick in Long Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
-plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
+## Not sure how to turn the scale off here (removed ppsBlue)
+##linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
+#fig = plt.figure(figsize=(6,3))
+#ax = plt.subplot(1,1,1)
+#ax.set_ylim([-0.03, 0.03])
+#ax.set_ylim([-0.05, 0.05])
+#trialsMultShadedFig(ax, [np.asarray(uvMeans_long_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText='First Lick in Long Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+##fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
 
 
 fig = plt.figure(figsize=(6,3))
 ax= plt.subplot(1,1,1)
-ax.set_ylim([-0.05, 0.05])
+#ax.set_ylim([-0.05, 0.05])
 LONG_SHORTrunMultFig = trialsMultShadedFig(ax, [np.asarray(blueMeans_short_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText=''
                                                   , linecolor=['k', 'firebrick'], errorcolor=['darkgrey', 'darkorange'], scale=0)
 ax.set(ylabel = chr(916) + 'F')
@@ -1172,6 +1179,8 @@ for i, val in enumerate(allRatDistractorsMOD):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
+        blueSnips = zscore(blueSnips)
+        uvSnips = zscore(uvSnips)
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -1193,7 +1202,7 @@ for i, val in enumerate(allRatDistractorsMOD):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+#ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorMOD),np.asarray(blueMeans_distractorMOD)], ppsBlue, eventText='Modelled Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1251,6 +1260,8 @@ for i, val in enumerate(allRatNotDistractedMOD):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
+        blueSnips = zscore(blueSnips)
+        uvSnips = zscore(uvSnips)
     except: 
         pass
     
@@ -1271,7 +1282,7 @@ for i, val in enumerate(allRatNotDistractedMOD):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+#ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMeans_notdistractedMOD)], ppsBlue, eventText='Not Distracted trial MOD', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1346,6 +1357,8 @@ for i, val in enumerate(allRatDistractorsHAB):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
+        blueSnips = zscore(blueSnips)
+        uvSnips = zscore(uvSnips)
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -1367,7 +1380,7 @@ for i, val in enumerate(allRatDistractorsHAB):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+#ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1387,6 +1400,8 @@ for i, val in enumerate(allRatDistractedHAB):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
+        blueSnips = zscore(blueSnips)
+        uvSnips = zscore(uvSnips)    
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -1407,7 +1422,7 @@ for i, val in enumerate(allRatDistractedHAB):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+#ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedHAB),np.asarray(blueMeans_distractedHAB)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
