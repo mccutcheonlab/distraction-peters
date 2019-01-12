@@ -201,7 +201,7 @@ ax7.spines['right'].set_visible(False)
 ax7.spines['top'].set_visible(False)
 ax7.spines['bottom'].set_visible(False)
 #fig9.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/LongTimeCourse.pdf', bbox_inches="tight") 
-#fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/PLongTimeCourseRat3_10min.pdf', bbox_inches="tight") 
+fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/LongTimeCourseDISRat10_20min.pdf', bbox_inches="tight") 
        
 
 
@@ -274,14 +274,27 @@ ax7.spines['right'].set_visible(False)
 ax7.spines['top'].set_visible(False)
 ax7.spines['bottom'].set_visible(False)
 #fig9.savefig('/Volumes/KPMSB352/PHOTOMETRY MMIN18/PDF figures/LongTimeCourse.pdf', bbox_inches="tight") 
-#fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/PLongTimeCourseRat3_10min.pdf', bbox_inches="tight") 
+fig9.savefig('/Users/kate/Desktop/Peters, McCutcheon & Young, 2019/Draft 1/LongTimeCourseDISRat10_2min.pdf', bbox_inches="tight") 
        
 
 
 ## then individual trials 
 
 
+## Converts snips to z-scores based on baseline period before event 
+# Default is 10 seconds as snips set up to be 30 seconds with 10 min 
+# before the event 
+    
+def zscore(snips, baseline_points=100):
 
+   BL_range = range(baseline_points)
+   z_snips = []
+   for i in snips:
+       mean = np.mean(i[BL_range])
+       sd = np.std(i[BL_range])
+       z_snips.append([(x-mean)/sd for x in i])
+
+   return z_snips    
 
 
 
