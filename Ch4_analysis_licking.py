@@ -1564,11 +1564,55 @@ for rat in blueMeans_notdistracted:
     AUC_all_notdistracted.append(AUC)
 mean_AUC_notdistracted = np.mean(AUC_all_notdistracted)  
 
+AUC_all_distractorsMOD = []
+for rat in blueMeans_distractorMOD:
+    AUC = np.trapz(rat[100:110])
+    AUC_all_distractorsMOD.append(AUC)
+mean_AUC_distractorsMOD = np.mean(AUC_all_distractorsMOD)
 
-
-
+AUC_all_distractorsHAB = []
+for rat in blueMeans_distractorHAB:
+    AUC = np.trapz(rat[100:110])
+    AUC_all_distractorsHAB.append(AUC)
+mean_AUC_distractorsHAB = np.mean(AUC_all_distractorsHAB)
   
-                         
-AUC_runs = np.trapz(np.asarray(blueMeans_distractor[100:110]))
 
-blueMeans_distractor
+## Add peak calculations, max within 5 seconds (just maximum, not subtraction or zero as zscores)
+peak_all_distractors = []
+for rat in blueMeans_distractor:
+    peak = np.max(rat[100:150])
+    peak_all_distractors.append(peak)
+mean_peak_distractors = np.mean(peak_all_distractors)
+
+peak_all_licks = []
+for rat in blueMeansRuns:
+    peak = np.max(rat[100:150])
+    peak_all_licks.append(peak)
+mean_peak_licks = np.mean(peak_all_licks)
+
+peak_all_distracted = []
+for rat in blueMeans_distracted:
+    peak = np.max(rat[100:150])
+    peak_all_distracted.append(peak)
+mean_peak_distracted = np.mean(peak_all_distracted)
+
+peak_all_notdistracted = []
+for rat in blueMeans_notdistracted:
+    peak = np.max(rat[100:150])
+    peak_all_notdistracted.append(peak)
+mean_peak_notdistracted = np.mean(peak_all_notdistracted)
+
+peak_all_distractorsMOD = []
+for rat in blueMeans_distractorMOD:
+    peak = np.max(rat[100:150])
+    peak_all_distractorsMOD.append(peak)
+mean_peak_distractorsMOD = np.mean(peak_all_distractorsMOD)
+
+peak_all_distractorsHAB = []
+for rat in blueMeans_distractorHAB:
+    peak = np.max(rat[100:150])
+    peak_all_distractorsHAB.append(peak)
+mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
+
+
+
