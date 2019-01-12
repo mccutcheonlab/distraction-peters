@@ -1537,7 +1537,7 @@ trialsMultShadedFig(ax, [np.asarray(blueMeans_distractor), np.asarray(blueMeans_
 
 
 # Calculate AUC for variables / events (all and then means)
-
+## 1 second
 AUC_all_distractors = []
 for rat in blueMeans_distractor:
     AUC = np.trapz(rat[100:110])
@@ -1576,6 +1576,51 @@ for rat in blueMeans_distractorHAB:
     AUC_all_distractorsHAB.append(AUC)
 mean_AUC_distractorsHAB = np.mean(AUC_all_distractorsHAB)
   
+
+## POST MEASURE AS AUC NOT AVERAGE ANYMORE 
+## AUC all after the stimulus / all after the peak 
+AUC_all_distractors = []
+for rat in blueMeans_distractor:
+    AUC = np.trapz(rat[100:300])
+    AUC_all_distractors.append(AUC)
+mean_AUC_distractors = np.mean(AUC_all_distractors)
+    
+AUC_all_licks = []
+for rat in blueMeansRuns:
+    AUC = np.trapz(rat[100:300])
+    AUC_all_licks.append(AUC)
+mean_AUC_licks = np.mean(AUC_all_licks)    
+    
+AUC_all_distracted = []
+for rat in blueMeans_distracted:
+    AUC = np.trapz(rat[100:300])
+    AUC_all_distracted.append(AUC)
+mean_AUC_distracted = np.mean(AUC_all_distracted)  
+
+AUC_all_notdistracted = []
+for rat in blueMeans_notdistracted:
+    AUC = np.trapz(rat[100:300])
+    AUC_all_notdistracted.append(AUC)
+mean_AUC_notdistracted = np.mean(AUC_all_notdistracted)  
+
+AUC_all_distractorsMOD = []
+for rat in blueMeans_distractorMOD:
+    AUC = np.trapz(rat[100:300])
+    AUC_all_distractorsMOD.append(AUC)
+mean_AUC_distractorsMOD = np.mean(AUC_all_distractorsMOD)
+
+AUC_all_distractorsHAB = []
+for rat in blueMeans_distractorHAB:
+    AUC = np.trapz(rat[100:300])
+    AUC_all_distractorsHAB.append(AUC)
+mean_AUC_distractorsHAB = np.mean(AUC_all_distractorsHAB)
+  
+#mean_AUC_distractors
+#mean_AUC_licks 
+#mean_AUC_distracted 
+#mean_AUC_notdistracted
+#mean_AUC_distractorsMOD
+#mean_AUC_distractorsHAB 
 
 ## Add peak calculations, max within 5 seconds (just maximum, not subtraction or zero as zscores)
 peak_all_distractors = []
