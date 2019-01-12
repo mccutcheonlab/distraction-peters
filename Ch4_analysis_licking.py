@@ -1533,4 +1533,42 @@ fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(blueMeans_distractor), np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-     
+
+
+
+# Calculate AUC for variables / events (all and then means)
+
+AUC_all_distractors = []
+for rat in blueMeans_distractor:
+    AUC = np.trapz(rat[100:110])
+    AUC_all_distractors.append(AUC)
+mean_AUC_distractors = np.mean(AUC_all_distractors)
+    
+AUC_all_licks = []
+for rat in blueMeansRuns:
+    AUC = np.trapz(rat[100:110])
+    AUC_all_licks.append(AUC)
+mean_AUC_licks = np.mean(AUC_all_licks)    
+    
+AUC_all_distracted = []
+for rat in blueMeans_distracted:
+    AUC = np.trapz(rat[100:110])
+    AUC_all_distracted.append(AUC)
+mean_AUC_distracted = np.mean(AUC_all_distracted)  
+
+## AUC is higher for not distracted because it starts higher
+## distracted trials start lower (proceeding activity included)
+AUC_all_notdistracted = []
+for rat in blueMeans_notdistracted:
+    AUC = np.trapz(rat[100:110])
+    AUC_all_notdistracted.append(AUC)
+mean_AUC_notdistracted = np.mean(AUC_all_notdistracted)  
+
+
+
+
+  
+                         
+AUC_runs = np.trapz(np.asarray(blueMeans_distractor[100:110]))
+
+blueMeans_distractor
