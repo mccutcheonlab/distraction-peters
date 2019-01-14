@@ -14,6 +14,8 @@ Chapter 4 - Distraction and photometry in VTA
 
 # Import modules --------------------------------------------------------
 
+
+
 import numpy as np
 import scipy.io as sio
 
@@ -44,7 +46,7 @@ def loadmatfile(file):
     a = sio.loadmat(file, squeeze_me=True, struct_as_record=False)
     print(type(a))
     sessiondict = {}
-    sessiondict['blue'] = a['output'].blue
+    sessiondict['bluefilt'] = a['output'].blue
     sessiondict['uv'] = a['output'].uv
     sessiondict['fs'] = a['output'].fs   
     
@@ -314,24 +316,24 @@ def findnoise(data, background, t2sMap = [], fs = 1, bins=0, method='sd'):
 # WHICH RATS DID NOT HAVE SIGNAL?
 # THPH1 AND 2
 # Lick day 
-TDTfiles_thph_lick = ['thph1-1_lick6', 'thph1-2_lick6', 'thph1-3_lick6', 'thph1-4_lick6', 'thph1-5_lick6',\
-                'thph1-6_lick6', 'thph2-1_lick3', 'thph2-2_lick3','thph2-3_lick3','thph2-4_lick3', \
-                'thph2-5_lick3','thph2-6_lick3', 'thph2-7_lick6', 'thph2-8_lick6']
+TDTfiles_thph_lick = ['thph1-1_lick6_proc', 'thph1-2_lick6_proc', 'thph1-3_lick6_proc', 'thph1-4_lick6_proc', 'thph1-5_lick6_proc',\
+                'thph1-6_lick6_proc', 'thph2-1_lick3_proc', 'thph2-2_lick3_proc','thph2-3_lick3_proc','thph2-4_lick3_proc', \
+                'thph2-5_lick3_proc','thph2-6_lick3_proc', 'thph2-7_lick6_proc', 'thph2-8_lick6_proc']
 
 # Modelled distractors change variable names for this script or script section 
 # Distraction day 
-TDTfiles_thph_dis = ['thph1-3_distraction1', \
-                'thph1-4_distraction1','thph1-5_distraction1','thph1-6_distraction1', \
-                'thph2-1_distraction', 'thph2-2_distraction', 'thph2-3_distraction', \
-                'thph2-4_distraction', 'thph2-5_distraction', 'thph2-6_distraction', \
-                'thph2-7_distraction', 'thph2-8_distraction'] #'thph1-1_distraction1', 'thph1-2_distraction1'
+TDTfiles_thph_dis = ['thph1-3_distraction1_proc', \
+                'thph1-4_distraction1_proc','thph1-5_distraction1_proc','thph1-6_distraction1_proc', \
+                'thph2-1_distraction_proc', 'thph2-2_distraction_proc', 'thph2-3_distraction_proc', \
+                'thph2-4_distraction_proc', 'thph2-5_distraction_proc', 'thph2-6_distraction_proc', \
+                'thph2-7_distraction_proc', 'thph2-8_distraction_proc'] #'thph1-1_distraction1_proc', 'thph1-2_distraction1_proc'
 
 # Habituation day 
-TDTfiles_thph_hab = ['thph1-3_distraction2',\
-                'thph1-4_distraction2', 'thph1-5_distraction2','thph1-6_distraction2',\
-                'thph2-1_habituation', 'thph2-2_habituation', 'thph2-3_habituation', \
-                'thph2-4_habituation', 'thph2-5_habituation', 'thph2-6_habituation', \
-                'thph2-7_habituation'] #['thph1-1_distraction2','thph1-2_distraction2',
+TDTfiles_thph_hab = ['thph1-3_distraction2_proc',\
+                'thph1-4_distraction2_proc', 'thph1-5_distraction2_proc','thph1-6_distraction2_proc',\
+                'thph2-1_habituation_proc', 'thph2-2_habituation_proc', 'thph2-3_habituation_proc', \
+                'thph2-4_habituation_proc', 'thph2-5_habituation_proc', 'thph2-6_habituation_proc', \
+                'thph2-7_habituation_proc'] #['thph1-1_distraction2_proc','thph1-2_distraction2_proc',
 
 
 TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 2018/THPH matfiles/'
@@ -361,7 +363,7 @@ for filename in TDTfiles_thph_lick:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlue.append(ratdata['blue'])
+    allRatBlue.append(ratdata['bluefilt'])
     allRatUV.append(ratdata['uv'])
     allRatFS.append(ratdata['fs'])
     allRatLicks.append(ratdata['licks'])
@@ -835,7 +837,7 @@ for filename in TDTfiles_thph_dis:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlue.append(ratdata['blue'])
+    allRatBlue.append(ratdata['bluefilt'])
     allRatUV.append(ratdata['uv'])
     allRatFS.append(ratdata['fs'])
     allRatLicks.append(ratdata['licks'])
@@ -1162,7 +1164,7 @@ for filename in TDTfiles_thph_lick[2:]:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlueMOD.append(ratdata['blue'])
+    allRatBlueMOD.append(ratdata['bluefilt'])
     allRatUVMOD.append(ratdata['uv'])
     allRatFSMOD.append(ratdata['fs'])
     allRatLicksMOD.append(ratdata['licks'])
@@ -1340,7 +1342,7 @@ for filename in TDTfiles_thph_hab:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlueHAB.append(ratdata['blue'])
+    allRatBlueHAB.append(ratdata['bluefilt'])
     allRatUVHAB.append(ratdata['uv'])
     allRatFSHAB.append(ratdata['fs'])
     allRatLicksHAB.append(ratdata['licks'])
