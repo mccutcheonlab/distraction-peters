@@ -1670,7 +1670,7 @@ data_peak = [peak_all_distractorsMOD, peak_all_distractors, peak_all_distractors
 data_1sec_AUC = [AUC_all_distractorsMOD, AUC_all_distractors, AUC_all_distractorsHAB]
 data_20sec_AUC = [AUC_all_distractorsMOD20, AUC_all_distractors20, AUC_all_distractorsHAB20]
 ## Make 3 plots here 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
@@ -1678,14 +1678,14 @@ ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired
 ax.spines['bottom'].set_visible(False)
 #figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
 ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
@@ -1706,7 +1706,7 @@ data_1sec_AUC = [[AUC_all_distracted, AUC_all_notdistracted]]
 data_20sec_AUC = [[AUC_all_distracted20, AUC_all_notdistracted20]]
 # Make 3 plots here
 ## Make 3 plots here 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
@@ -1714,14 +1714,14 @@ ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired
 ax.spines['bottom'].set_visible(False)
 #figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
 ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
