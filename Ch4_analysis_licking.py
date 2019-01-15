@@ -1763,6 +1763,49 @@ ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, p
 ax.spines['bottom'].set_visible(False)
 
 
+## Write list of numbers to export into excel 
+## Peak heights 
+peak_all_distractorsMOD, 
+peak_all_distractors, 
+peak_all_distractorsHAB
+peak_all_distracted, 
+peak_all_notdistracted, 
+peak_all_licks
+
+AUC_all_distractorsMOD, 
+AUC_all_distractors, 
+AUC_all_distractorsHAB
+AUC_all_distracted, 
+AUC_all_notdistracted, 
+AUC_all_licks
+
+AUC_all_distractorsMOD20, 
+AUC_all_distractors20, 
+AUC_all_distractorsHAB20
+AUC_all_distracted20, 
+AUC_all_notdistracted20, 
+AUC_all_licks20
+
+
+
+'''
+
+PEAK
+(1) Modelled, distraction, habituation (1 way ANOVA)
+(2) Distracted, not distracted (t-test)
+(3) Distractors, licking peaks (t-test)
+
+•• Could 
+
+AUC - within 1 second 
+(1) Distracted and not distracted (paired samples t-test)
+
+- could also add the other 2 here if interesting 
+
+AUC - within 20 seconds of the event 
+(1) Modelled, distraction, habituation
+(2) Distracted, not distracted
+(3) Distractors, licking peaks 
 
 
 
