@@ -1515,27 +1515,29 @@ hab
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeansRuns), np.asarray(blueMeans_distractor)], ppsBlue, eventText='Event', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-
-
+trialsMultShadedFig(ax, [np.asarray(blueMeansRuns[2:]), np.asarray(blueMeans_distractor)], ppsBlue, eventText='Event', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Photo_licking_distractors.pdf', bbox_inches="tight")
+                    
 # Distracted and not distracted
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeans_distracted), np.asarray(blueMeans_notdistracted)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+trialsMultShadedFig(ax, [np.asarray(blueMeans_notdistracted), np.asarray(blueMeans_distracted)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Photo_distracted_notdis.pdf', bbox_inches="tight")
 
 # Modelled and distraction day
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorMOD),np.asarray(blueMeans_distractor) ], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Modelled_real.pdf', bbox_inches="tight")
 
 # Distraction day and habituation day 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 #ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeans_distractor), np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-
+trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorHAB),np.asarray(blueMeans_distractor[:-1])], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
+fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Dis_habituation.pdf', bbox_inches="tight")
 
 
 # Calculate AUC for variables / events (all and then means)
@@ -1626,39 +1628,82 @@ mean_AUC_distractorsHAB20 = np.mean(AUC_all_distractorsHAB20)
 
 ## Add peak calculations, max within 5 seconds (just maximum, not subtraction or zero as zscores)
 peak_all_distractors = []
+tmax_all_distractors = []
 for rat in blueMeans_distractor:
     peak = np.max(rat[100:150])
     peak_all_distractors.append(peak)
+    
+    peak_range = rat[100:150]
+    a = peak_range.tolist()
+    peak_index = a.index(peak)
+    t = peak_index / 10
+    tmax_all_distractors.append(t)
 mean_peak_distractors = np.mean(peak_all_distractors)
 
+
 peak_all_licks = []
+tmax_all_licks = []
 for rat in blueMeansRuns:
     peak = np.max(rat[100:150])
     peak_all_licks.append(peak)
+    
+    peak_range = rat[100:150]
+    a = peak_range.tolist()
+    peak_index = a.index(peak)
+    t = peak_index / 10
+    tmax_all_licks.append(t)
 mean_peak_licks = np.mean(peak_all_licks)
 
 peak_all_distracted = []
+tmax_all_distracted = []
 for rat in blueMeans_distracted:
     peak = np.max(rat[100:150])
     peak_all_distracted.append(peak)
+    
+    peak_range = rat[100:150]
+    a = peak_range.tolist()
+    peak_index = a.index(peak)
+    t = peak_index / 10
+    tmax_all_distracted.append(t)
 mean_peak_distracted = np.mean(peak_all_distracted)
 
 peak_all_notdistracted = []
+tmax_all_notdistracted = []
 for rat in blueMeans_notdistracted:
     peak = np.max(rat[100:150])
-    peak_all_notdistracted.append(peak)
+    peak_all_notdistracted.append(peak)    
+    
+    peak_range = rat[100:150]
+    a = peak_range.tolist()
+    peak_index = a.index(peak)
+    t = peak_index / 10
+    tmax_all_notdistracted.append(t)
 mean_peak_notdistracted = np.mean(peak_all_notdistracted)
 
 peak_all_distractorsMOD = []
+tmax_all_distractorsMOD = []
 for rat in blueMeans_distractorMOD:
     peak = np.max(rat[100:150])
     peak_all_distractorsMOD.append(peak)
+        
+    peak_range = rat[100:150]
+    a = peak_range.tolist()
+    peak_index = a.index(peak)
+    t = peak_index / 10
+    tmax_all_distractorsMOD.append(t)
 mean_peak_distractorsMOD = np.mean(peak_all_distractorsMOD)
 
 peak_all_distractorsHAB = []
+tmax_all_distractorsHAB = []
 for rat in blueMeans_distractorHAB:
     peak = np.max(rat[100:150])
     peak_all_distractorsHAB.append(peak)
+    
+    peak_range = rat[100:150]
+    a = peak_range.tolist()
+    peak_index = a.index(peak)
+    t = peak_index / 10
+    tmax_all_distractorsHAB.append(t)
 mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
 
 ## Add barscatter plots for the peak heights, AUC in 1 second and 
@@ -1668,31 +1713,32 @@ mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
 ########################################################################
 
 ## Modelled, distraction and habituation day 
-data_peak = [peak_all_distractorsMOD, peak_all_distractors, peak_all_distractorsHAB]
-data_1sec_AUC = [AUC_all_distractorsMOD, AUC_all_distractors, AUC_all_distractorsHAB]
-data_20sec_AUC = [AUC_all_distractorsMOD20, AUC_all_distractors20, AUC_all_distractorsHAB20]
+data_peak = [peak_all_distractorsMOD[:-1], peak_all_distractors[:-1], peak_all_distractorsHAB]
+data_1sec_AUC = [AUC_all_distractorsMOD[:-1], AUC_all_distractors[:-1], AUC_all_distractorsHAB]
+data_20sec_AUC = [AUC_all_distractorsMOD20[:-1], AUC_all_distractors20[:-1], AUC_all_distractorsHAB20]
 ## Make 3 plots here 
 col3 = ['darkturquoise','dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_mod_dis_hab.pdf', bbox_inches="tight")
+
+#col3 = ['darkturquoise','dodgerblue','lightblue']
+#labels = ['mod', 'dis', 'hab']
+#mpl.rcParams['font.size'] = 14
+#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
+#ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#ax.spines['bottom'].set_visible(False)
 
 col3 = ['darkturquoise','dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='AUC (unit?)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-
-col3 = ['darkturquoise','dodgerblue','lightblue']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/AUC_Bar_mod_dis_hab.pdf', bbox_inches="tight")
 
 ''' issue with the AUC -400? Why are 1 sec and 20 sec the same'''
 
@@ -1703,66 +1749,68 @@ ax.spines['bottom'].set_visible(False)
 ########################################################################
 
 ## Distracted vs not distracted
-data_peak = [[peak_all_distracted, peak_all_notdistracted]]
-data_1sec_AUC = [[AUC_all_distracted, AUC_all_notdistracted]]
-data_20sec_AUC = [[AUC_all_distracted20, AUC_all_notdistracted20]]
+data_peak = [[ peak_all_notdistracted,peak_all_distracted]]
+data_1sec_AUC = [[AUC_all_notdistracted,AUC_all_distracted]]
+data_20sec_AUC = [[AUC_all_notdistracted20,AUC_all_distracted20]]
 # Make 3 plots here
 ## Make 3 plots here 
 col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_dis_notdis.pdf', bbox_inches="tight")
 
-col3 = ['darkturquoise','dodgerblue']
+#col3 = ['darkturquoise','dodgerblue']
+#labels = ['mod', 'dis', 'hab']
+#mpl.rcParams['font.size'] = 14
+#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
+#ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#ax.spines['bottom'].set_visible(False)
+col3 = ['dodgerblue', 'darkturquoise']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='AUC (unit?)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-
-col3 = ['darkturquoise','dodgerblue']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/AUC_Bar_dis_notdis.pdf', bbox_inches="tight")
 
 ########################################################################
 ########################################################################
 ########################################################################
 
 # Distractors vs licks 
-data_peak = [peak_all_distractors, peak_all_licks]
-data_1sec_AUC = [AUC_all_distractors, AUC_all_licks]
-data_20sec_AUC = [AUC_all_distractors20, AUC_all_licks20]
+data_peak = [peak_all_licks[2:],peak_all_distractors, ]
+data_1sec_AUC = [AUC_all_licks[2:],AUC_all_distractors]
+data_20sec_AUC = [AUC_all_licks20[2:],AUC_all_distractors20]
 # Make 3 plots here 
 ## Make 3 plots here 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
 #figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_lick_dis.pdf', bbox_inches="tight")
 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+#col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+#labels = ['mod', 'dis', 'hab']
+#mpl.rcParams['font.size'] = 14
+#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
+#ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#ax.spines['bottom'].set_visible(False)
+
+col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='AUC (unit?)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/AUC_Bar_lick_dis.pdf', bbox_inches="tight")
 
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-
-
+'''
 ## Write list of numbers to export into excel 
 ## Peak heights 
 peak_all_distractorsMOD, 
@@ -1785,28 +1833,4 @@ AUC_all_distractorsHAB20
 AUC_all_distracted20, 
 AUC_all_notdistracted20, 
 AUC_all_licks20
-
-
-
 '''
-
-PEAK
-(1) Modelled, distraction, habituation (1 way ANOVA)
-(2) Distracted, not distracted (t-test)
-(3) Distractors, licking peaks (t-test)
-
-•• Could 
-
-AUC - within 1 second 
-(1) Distracted and not distracted (paired samples t-test)
-
-- could also add the other 2 here if interesting 
-
-AUC - within 20 seconds of the event 
-(1) Modelled, distraction, habituation
-(2) Distracted, not distracted
-(3) Distractors, licking peaks 
-
-
-
-
