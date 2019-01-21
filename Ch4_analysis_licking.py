@@ -1542,43 +1542,43 @@ fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Dis_habituation.pdf'
 
 # Calculate AUC for variables / events (all and then means)
 ## 1 second
-AUC_all_distractors = []
+AUC5_all_distractors = []
 for rat in blueMeans_distractor:
-    AUC = np.trapz(rat[100:110])
-    AUC_all_distractors.append(AUC)
-mean_AUC_distractors = np.mean(AUC_all_distractors)
+    AUC = np.trapz(rat[100:150])
+    AUC5_all_distractors.append(AUC)
+mean_AUC_distractors = np.mean(AUC5_all_distractors)
     
-AUC_all_licks = []
+AUC5_all_licks = []
 for rat in blueMeansRuns:
-    AUC = np.trapz(rat[100:110])
-    AUC_all_licks.append(AUC)
-mean_AUC_licks = np.mean(AUC_all_licks)    
+    AUC = np.trapz(rat[100:150])
+    AUC5_all_licks.append(AUC)
+mean_AUC_licks = np.mean(AUC5_all_licks)    
     
-AUC_all_distracted = []
+AUC5_all_distracted = []
 for rat in blueMeans_distracted:
-    AUC = np.trapz(rat[100:110])
-    AUC_all_distracted.append(AUC)
-mean_AUC_distracted = np.mean(AUC_all_distracted)  
+    AUC = np.trapz(rat[100:150])
+    AUC5_all_distracted.append(AUC)
+mean_AUC_distracted = np.mean(AUC5_all_distracted)  
 
 ## AUC is higher for not distracted because it starts higher
 ## distracted trials start lower (proceeding activity included)
-AUC_all_notdistracted = []
+AUC5_all_notdistracted = []
 for rat in blueMeans_notdistracted:
-    AUC = np.trapz(rat[100:110])
-    AUC_all_notdistracted.append(AUC)
-mean_AUC_notdistracted = np.mean(AUC_all_notdistracted)  
+    AUC = np.trapz(rat[100:150])
+    AUC5_all_notdistracted.append(AUC)
+mean_AUC_notdistracted = np.mean(AUC5_all_notdistracted)  
 
-AUC_all_distractorsMOD = []
+AUC5_all_distractorsMOD = []
 for rat in blueMeans_distractorMOD:
-    AUC = np.trapz(rat[100:110])
-    AUC_all_distractorsMOD.append(AUC)
-mean_AUC_distractorsMOD = np.mean(AUC_all_distractorsMOD)
+    AUC = np.trapz(rat[100:150])
+    AUC5_all_distractorsMOD.append(AUC)
+mean_AUC_distractorsMOD = np.mean(AUC5_all_distractorsMOD)
 
-AUC_all_distractorsHAB = []
+AUC5_all_distractorsHAB = []
 for rat in blueMeans_distractorHAB:
-    AUC = np.trapz(rat[100:110])
-    AUC_all_distractorsHAB.append(AUC)
-mean_AUC_distractorsHAB = np.mean(AUC_all_distractorsHAB)
+    AUC = np.trapz(rat[100:150])
+    AUC5_all_distractorsHAB.append(AUC)
+mean_AUC_distractorsHAB = np.mean(AUC5_all_distractorsHAB)
   
 
 ## POST MEASURE AS AUC NOT AVERAGE ANYMORE 
@@ -1715,6 +1715,7 @@ mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
 ## Modelled, distraction and habituation day 
 data_peak = [peak_all_distractorsMOD[:-1], peak_all_distractors[:-1], peak_all_distractorsHAB]
 data_1sec_AUC = [AUC_all_distractorsMOD[:-1], AUC_all_distractors[:-1], AUC_all_distractorsHAB]
+data_5sec_AUC = [AUC5_all_distractorsMOD[:-1], AUC5_all_distractors[:-1], AUC5_all_distractorsHAB]
 data_20sec_AUC = [AUC_all_distractorsMOD20[:-1], AUC_all_distractors20[:-1], AUC_all_distractorsHAB20]
 ## Make 3 plots here 
 col3 = ['darkturquoise','dodgerblue','lightblue']
