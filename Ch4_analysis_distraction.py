@@ -489,18 +489,29 @@ for rat in discalcHab:
 # PERCENT DISTRACTED - THPH1 AND THPH2
     
 # For barscatter plots excluded rats 2.7 and 2.8 (as not all point on all days)
-data = [[percentdisLick[0:12], percentdisDis[0:12], percentdisHab]]
-
-col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
-col3 = ['#a2e283','#4cbb17','#257200']
+# Make this as two separate plots 
+data = [[percentdisLick[0:12], percentdisDis[0:12]]]
+col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
 ax, barx, barlist, sclist = barscatter(data, transpose=False, ax=ax,paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/PERCENT_Bar_mod_dis.pdf', bbox_inches="tight")
 
-   
+data = [[percentdisDis[0:12], percentdisHab]]
+col3 = ['dodgerblue','lightblue']   
+labels = ['mod', 'dis', 'hab']
+mpl.rcParams['font.size'] = 14
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
+ax, barx, barlist, sclist = barscatter(data, transpose=False, ax=ax,paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/PERCENT_Bar_dis_hab.pdf', bbox_inches="tight")
+
+
+
+
+
  # Barscatters to make: 
 
 ## PERHAPS only care about distractORS as not many distracted trials on this habituation day? 
