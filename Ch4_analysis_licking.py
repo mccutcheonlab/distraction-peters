@@ -316,6 +316,18 @@ def findnoise(data, background, t2sMap = [], fs = 1, bins=0, method='sd'):
 # WHICH RATS DID NOT HAVE SIGNAL?
 # THPH1 AND 2
 # Lick day 
+    
+def zscore(snips, baseline_points=100):
+
+   BL_range = range(baseline_points)
+   z_snips = []
+   for i in snips:
+       mean = np.mean(i[BL_range])
+       sd = np.std(i[BL_range])
+       z_snips.append([(x-mean)/sd for x in i])
+
+   return z_snips 
+
 TDTfiles_thph_lick = ['thph1-1_lick6_proc', 'thph1-2_lick6_proc', 'thph1-3_lick6_proc', 'thph1-4_lick6_proc', 'thph1-5_lick6_proc',\
                 'thph1-6_lick6_proc', 'thph2-1_lick3_proc', 'thph2-2_lick3_proc','thph2-3_lick3_proc','thph2-4_lick3_proc', \
                 'thph2-5_lick3_proc','thph2-6_lick3_proc', 'thph2-7_lick6_proc', 'thph2-8_lick6_proc']
@@ -464,6 +476,7 @@ plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to b
 
 
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
+  
 
 '''
 ## Shows every single trial for each rat for runs - to choose representative sample
@@ -1712,19 +1725,35 @@ mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
 ########################################################################
 ########################################################################
 
-## Modelled, distraction and habituation day 
-data_peak = [peak_all_distractorsMOD[:-1], peak_all_distractors[:-1], peak_all_distractorsHAB]
-data_1sec_AUC = [AUC_all_distractorsMOD[:-1], AUC_all_distractors[:-1], AUC_all_distractorsHAB]
-data_5sec_AUC = [AUC5_all_distractorsMOD[:-1], AUC5_all_distractors[:-1], AUC5_all_distractorsHAB]
-data_20sec_AUC = [AUC_all_distractorsMOD20[:-1], AUC_all_distractors20[:-1], AUC_all_distractorsHAB20]
+## Modelled and distraction day 
+data_peak = [peak_all_distractorsMOD[:-1], peak_all_distractors[:-1]]
+data_1sec_AUC = [AUC_all_distractorsMOD[:-1], AUC_all_distractors[:-1]]
+data_5sec_AUC = [AUC5_all_distractorsMOD[:-1], AUC5_all_distractors[:-1]]
+data_20sec_AUC = [AUC_all_distractorsMOD20[:-1], AUC_all_distractors20[:-1]]
 ## Make 3 plots here 
-col3 = ['darkturquoise','dodgerblue','lightblue']
+col3 = ['darkturquoise','dodgerblue']
+labels = ['mod', 'dis', 'hab']
+mpl.rcParams['font.size'] = 14
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(1.5,3)) ### x,y
+ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05, scatterlinecolor = 'k', scatteredgecolor='k', baredgecolor = ['black']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.spines['bottom'].set_visible(False)
+#figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_mod_dis.pdf', bbox_inches="tight")
+
+## Distraction and habituation day 
+data_peak = [peak_all_distractors[:-1], peak_all_distractorsHAB]
+data_1sec_AUC = [AUC_all_distractors[:-1], AUC_all_distractorsHAB]
+data_5sec_AUC = [AUC5_all_distractors[:-1], AUC5_all_distractorsHAB]
+data_20sec_AUC = [AUC_all_distractors20[:-1], AUC_all_distractorsHAB20]
+## Make 3 plots here 
+col3 = ['dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05, scatterlinecolor = 'k') #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_mod_dis_hab.pdf', bbox_inches="tight")
+#figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_dis_hab.pdf', bbox_inches="tight")
+
+
 
 #col3 = ['darkturquoise','dodgerblue','lightblue']
 #labels = ['mod', 'dis', 'hab']
