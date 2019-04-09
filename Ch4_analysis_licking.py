@@ -1727,9 +1727,9 @@ mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
 
 ## Modelled and distraction day 
 data_peak = [peak_all_distractorsMOD[:-1], peak_all_distractors[:-1]]
-#data_1sec_AUC = [AUC_all_distractorsMOD[:-1], AUC_all_distractors[:-1]]
-#data_5sec_AUC = [AUC5_all_distractorsMOD[:-1], AUC5_all_distractors[:-1]]
 data_20sec_AUC = [AUC_all_distractorsMOD20[:-1], AUC_all_distractors20[:-1]]
+
+## Peak modelled vs distraction day
 ## Make 3 plots here 
 col3 = ['darkturquoise','dodgerblue']
 labels = ['mod', 'dis', 'hab']
@@ -1741,10 +1741,9 @@ ax.spines['bottom'].set_visible(False)
 
 ## Distraction and habituation day 
 data_peak = [peak_all_distractors[:-1], peak_all_distractorsHAB]
-#data_1sec_AUC = [AUC_all_distractors[:-1], AUC_all_distractorsHAB]
-#data_5sec_AUC = [AUC5_all_distractors[:-1], AUC5_all_distractorsHAB]
 data_20sec_AUC = [AUC_all_distractors20[:-1], AUC_all_distractorsHAB20]
-## Make 3 plots here 
+
+## Peak distraction day and habituation day 
 col3 = ['dodgerblue','lightblue']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
@@ -1752,6 +1751,7 @@ figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(1.5,3)) ### x,y
 ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05, scatterlinecolor = 'k', scatteredgecolor='k', baredgecolor = ['black']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
 #figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_dis_hab.pdf', bbox_inches="tight")
+
 
 
 
