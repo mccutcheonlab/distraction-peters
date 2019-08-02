@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri May 25 09:08:16 2018
+Created on Wed Jul 31 15:39:40 2019
 
+@author: kate
+"""
+
+## UPDATED CORRECTIONS FILE 
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri May 25 09:08:16 2018
 @author: u1490431
 """
 
 """
 Chapter 4 - Distraction and photometry in VTA 
-
-
 """
 
 # Import modules --------------------------------------------------------
-
-
 
 import numpy as np
 import scipy.io as sio
@@ -46,7 +51,7 @@ def loadmatfile(file):
     a = sio.loadmat(file, squeeze_me=True, struct_as_record=False)
     print(type(a))
     sessiondict = {}
-    sessiondict['bluefilt'] = a['output'].blue
+    sessiondict['blue'] = a['output'].blue
     sessiondict['uv'] = a['output'].uv
     sessiondict['fs'] = a['output'].fs   
     
@@ -316,41 +321,29 @@ def findnoise(data, background, t2sMap = [], fs = 1, bins=0, method='sd'):
 # WHICH RATS DID NOT HAVE SIGNAL?
 # THPH1 AND 2
 # Lick day 
-    
-def zscore(snips, baseline_points=100):
-
-   BL_range = range(baseline_points)
-   z_snips = []
-   for i in snips:
-       mean = np.mean(i[BL_range])
-       sd = np.std(i[BL_range])
-       z_snips.append([(x-mean)/sd for x in i])
-
-   return z_snips 
-
-TDTfiles_thph_lick = ['thph1-1_lick6_proc', 'thph1-2_lick6_proc', 'thph1-3_lick6_proc', 'thph1-4_lick6_proc', 'thph1-5_lick6_proc',\
-                'thph1-6_lick6_proc', 'thph2-1_lick3_proc', 'thph2-2_lick3_proc','thph2-3_lick3_proc','thph2-4_lick3_proc', \
-                'thph2-5_lick3_proc','thph2-6_lick3_proc', 'thph2-7_lick6_proc', 'thph2-8_lick6_proc']
+TDTfiles_thph_lick = ['thph1-1_lick6', 'thph1-2_lick6', 'thph1-3_lick6', 'thph1-4_lick6', 'thph1-5_lick6',\
+                'thph1-6_lick6', 'thph2-1_lick3', 'thph2-2_lick3','thph2-3_lick3','thph2-4_lick3', \
+                'thph2-5_lick3','thph2-6_lick3', 'thph2-7_lick6', 'thph2-8_lick6']
 
 # Modelled distractors change variable names for this script or script section 
 # Distraction day 
-TDTfiles_thph_dis = ['thph1-3_distraction1_proc', \
-                'thph1-4_distraction1_proc','thph1-5_distraction1_proc','thph1-6_distraction1_proc', \
-                'thph2-1_distraction_proc', 'thph2-2_distraction_proc', 'thph2-3_distraction_proc', \
-                'thph2-4_distraction_proc', 'thph2-5_distraction_proc', 'thph2-6_distraction_proc', \
-                'thph2-7_distraction_proc', 'thph2-8_distraction_proc'] #'thph1-1_distraction1_proc', 'thph1-2_distraction1_proc'
+TDTfiles_thph_dis = ['thph1-3_distraction1', \
+                'thph1-4_distraction1','thph1-5_distraction1','thph1-6_distraction1', \
+                'thph2-1_distraction', 'thph2-2_distraction', 'thph2-3_distraction', \
+                'thph2-4_distraction', 'thph2-5_distraction', 'thph2-6_distraction', \
+                'thph2-7_distraction', 'thph2-8_distraction'] #'thph1-1_distraction1', 'thph1-2_distraction1'
 
 # Habituation day 
-TDTfiles_thph_hab = ['thph1-3_distraction2_proc',\
-                'thph1-4_distraction2_proc', 'thph1-5_distraction2_proc','thph1-6_distraction2_proc',\
-                'thph2-1_habituation_proc', 'thph2-2_habituation_proc', 'thph2-3_habituation_proc', \
-                'thph2-4_habituation_proc', 'thph2-5_habituation_proc', 'thph2-6_habituation_proc', \
-                'thph2-7_habituation_proc'] #['thph1-1_distraction2_proc','thph1-2_distraction2_proc',
+TDTfiles_thph_hab = ['thph1-3_distraction2',\
+                'thph1-4_distraction2', 'thph1-5_distraction2','thph1-6_distraction2',\
+                'thph2-1_habituation', 'thph2-2_habituation', 'thph2-3_habituation', \
+                'thph2-4_habituation', 'thph2-5_habituation', 'thph2-6_habituation', \
+                'thph2-7_habituation'] #['thph1-1_distraction2','thph1-2_distraction2',
 
 
 TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 2018/THPH matfiles/'
 
-#savepath = '/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures'
+savepath = '/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures'
 
 # LICKING ANALYSIS **************************************************************************
 # Loop through files and calculate burst and run lengths
@@ -370,12 +363,11 @@ allRatUV = []
 allRatFS = []
 allRatLicks = []
 
-
 for filename in TDTfiles_thph_lick:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlue.append(ratdata['bluefilt'])
+    allRatBlue.append(ratdata['blue'])
     allRatUV.append(ratdata['uv'])
     allRatFS.append(ratdata['fs'])
     allRatLicks.append(ratdata['licks'])
@@ -423,9 +415,6 @@ for i, val in enumerate(allRunTimes):
     threshold = 1
     sigSum = [np.sum(abs(i)) for i in blueSnips]
     noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
-    
-    blueSnips = zscore(blueSnips)
-    uvSnips = zscore(uvSnips)
 
 #     Might not need the noise index, this is just for trials fig 
     
@@ -468,17 +457,13 @@ for i, val in enumerate(allRunTimes):
 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.03, 0.03])
-#ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.03, 0.03])
+ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeansRuns[2:]),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
-# PLOTS BLUE LINE TWICE (JAN19)
-
-
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
-  
 
-'''
+
 ## Shows every single trial for each rat for runs - to choose representative sample
 #for index, sniplist in enumerate(allbluesnips):
 #    for ind, lis in enumerate(sniplist):
@@ -617,10 +602,10 @@ yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
 scalebary = (yrange / 10) + ax.get_ylim()[0]
 scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
 ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
-ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
+ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top')
 #f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_SCALE.pdf',  bbox_inches="tight")
 
-'''
+
 ###########################################################################################
 
 # Long and short runs, 25th and 75th percentiles 
@@ -709,8 +694,6 @@ for i, val in enumerate(lowerqRunTimes):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
 #    
@@ -740,11 +723,11 @@ MergedRunList_Short = list(itertools.chain.from_iterable(lowerqRunTimes))
 #linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.03, 0.03])
-#ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.03, 0.03])
+ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_short_run),np.asarray(blueMeans_short_run)], ppsBlue, eventText='First Lick in Short Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList_Short)) + ' Short Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Short_Runs_All_Rats.pdf', bbox_inches="tight")
+fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Short_Runs_All_Rats.pdf', bbox_inches="tight")
 
 
 ## ===============================================================
@@ -763,8 +746,6 @@ for i, val in enumerate(uppqRunTimes):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
     
@@ -791,20 +772,20 @@ MergedRunList_Long = list(itertools.chain.from_iterable(uppqRunTimes))
 # Average of all SHORT runs, all rats, all trials 
 ## Mean of ALL SHORT runs and ALL rats on multishaded figure
 
-## Not sure how to turn the scale off here (removed ppsBlue)
-##linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
-#fig = plt.figure(figsize=(6,3))
-#ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.03, 0.03])
-#ax.set_ylim([-0.05, 0.05])
-#trialsMultShadedFig(ax, [np.asarray(uvMeans_long_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText='First Lick in Long Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
-#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-##fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
+# Not sure how to turn the scale off here (removed ppsBlue)
+#linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.03, 0.03])
+ax.set_ylim([-0.05, 0.05])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_long_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText='First Lick in Long Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
 
 
 fig = plt.figure(figsize=(6,3))
 ax= plt.subplot(1,1,1)
-#ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.05, 0.05])
 LONG_SHORTrunMultFig = trialsMultShadedFig(ax, [np.asarray(blueMeans_short_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText=''
                                                   , linecolor=['k', 'firebrick'], errorcolor=['darkgrey', 'darkorange'], scale=0)
 ax.set(ylabel = chr(916) + 'F')
@@ -818,7 +799,7 @@ orange_patch = mpatches.Patch(color='darkorange', label='Long Runs')
 grey_patch = mpatches.Patch(color='darkgrey', label='Short Runs')
 plt.legend(handles=[orange_patch, grey_patch], fontsize=14)
 plt.show()
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortANDLong_Runs_All_Rats.pdf', bbox_inches="tight")
+fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortANDLong_Runs_All_Rats.pdf', bbox_inches="tight")
 
 
 ######
@@ -850,7 +831,7 @@ for filename in TDTfiles_thph_dis:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlue.append(ratdata['bluefilt'])
+    allRatBlue.append(ratdata['blue'])
     allRatUV.append(ratdata['uv'])
     allRatFS.append(ratdata['fs'])
     allRatLicks.append(ratdata['licks'])
@@ -865,7 +846,7 @@ for filename in TDTfiles_thph_dis:
     ax6.spines['bottom'].set_visible(False)
     ax6.set(ylabel = 'Trials')
     ax6.yaxis.label.set_size(14)
-#    distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents='yes', sortdirection='dec')
+    distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents='yes', sortdirection='dec')
     
 
 for i, val in enumerate(allRatDistractors):
@@ -879,10 +860,7 @@ for i, val in enumerate(allRatDistractors):
         threshold = 1
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
-        # Might not need the noise index, this is just for trials fig
-        
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
+        # Might not need the noise index, this is just for trials fig 
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -904,7 +882,7 @@ for i, val in enumerate(allRatDistractors):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractor),np.asarray(blueMeans_distractor)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -924,8 +902,6 @@ for i, val in enumerate(allRatDistracted):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -946,7 +922,7 @@ for i, val in enumerate(allRatDistracted):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distracted),np.asarray(blueMeans_distracted)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -967,8 +943,6 @@ for i, val in enumerate(allRatNotDistracted):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
     
@@ -977,7 +951,7 @@ for i, val in enumerate(allRatNotDistracted):
 #    ax13 = plt.subplot(1,1,1)
 #    ax13.set_ylim([-0.15, 0.15])
 #    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
- #   plt.text(250,0.2, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
+#    plt.text(250,0.2, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
 #    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
 
 # Means for not distracted trials here MULT SHADED FIG 
@@ -989,7 +963,7 @@ for i, val in enumerate(allRatNotDistracted):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_notdistracted)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1055,18 +1029,11 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_
 ## Smaller time period before ? Less than a second so you know no distractors are present???? 
 
 '''
-
 #### Representative rat 
-
-
 ## repeat on LICKING DAY - with modelled distractors and modelled distraction / or not 
-
-
-
 ### Then look at white noise vs non white noise 
 ## Then white noise on habituation day AND all distractors on habituation day (not distracted trials as very few, maybe)
 ## THEN compare the peaks with stats and export to SPSS for t-tests?
-
 '''
 ################################################################################################
 ################################################################################################
@@ -1100,6 +1067,8 @@ bkgnd_sub_Notdistracted = uvSubtractor(blueMeans_notdistracted, uvMeans_notdistr
 ## Expects list of 12 rats with mean snips in each field 
 ## Give it the background subtracted snips or just the blue (as list of lists with eachlist a rat)
 
+
+
 def PhotoPeaksCalc(snips_all_rats):
     
     allRat_peak = []
@@ -1110,8 +1079,8 @@ def PhotoPeaksCalc(snips_all_rats):
     
     for rat in snips_all_rats:
         pre_event = np.mean(rat[0:50]) # Average for 5 seconds, 10 seconds before event 
-        peak = np.max(rat[100:300]) ## Minus the average of the first 5 seconds and after 100 points (slice)
-        peak_range = rat[100:300]
+        peak = np.max(rat[100:130]) ## Minus the average of the first 5 seconds and after 100 points (slice)
+        peak_range = rat[100:130]
         a = peak_range.tolist()
         peak_index = a.index(peak)
         t = peak_index / 10
@@ -1127,7 +1096,6 @@ def PhotoPeaksCalc(snips_all_rats):
         
     
     return allRat_peak, allRat_t, allRat_pre, allRat_post, allRat_base
-
 
 ### Photometry peak variables - remember these lists will be unequal distractors 12 rats not 14?
 ### Should maybe take out the first 2 of the licks too? As they had no signal ???
@@ -1177,7 +1145,7 @@ for filename in TDTfiles_thph_lick[2:]:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlueMOD.append(ratdata['bluefilt'])
+    allRatBlueMOD.append(ratdata['blue'])
     allRatUVMOD.append(ratdata['uv'])
     allRatFSMOD.append(ratdata['fs'])
     allRatLicksMOD.append(ratdata['licks'])
@@ -1198,8 +1166,6 @@ for i, val in enumerate(allRatDistractorsMOD):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -1221,11 +1187,11 @@ for i, val in enumerate(allRatDistractorsMOD):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorMOD),np.asarray(blueMeans_distractorMOD)], ppsBlue, eventText='Modelled Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Modelled_Distractors_All_Rats.pdf', bbox_inches="tight")
+fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Modelled_Distractors_All_Rats.pdf', bbox_inches="tight")
 
 
 
@@ -1279,8 +1245,6 @@ for i, val in enumerate(allRatNotDistractedMOD):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
     
@@ -1301,7 +1265,7 @@ for i, val in enumerate(allRatNotDistractedMOD):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMeans_notdistractedMOD)], ppsBlue, eventText='Not Distracted trial MOD', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1355,7 +1319,7 @@ for filename in TDTfiles_thph_hab:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
-    allRatBlueHAB.append(ratdata['bluefilt'])
+    allRatBlueHAB.append(ratdata['blue'])
     allRatUVHAB.append(ratdata['uv'])
     allRatFSHAB.append(ratdata['fs'])
     allRatLicksHAB.append(ratdata['licks'])
@@ -1376,8 +1340,6 @@ for i, val in enumerate(allRatDistractorsHAB):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -1399,12 +1361,11 @@ for i, val in enumerate(allRatDistractorsHAB):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
-#trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Habituation_Distractors_All_Rats.pdf', bbox_inches="tight")
-trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorHAB), np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['blue','blue'], errorcolor = ['lightblue','lightblue'], scale=0)
 
 
 
@@ -1420,8 +1381,6 @@ for i, val in enumerate(allRatDistractedHAB):
         sigSum = [np.sum(abs(i)) for i in blueSnips]
         noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
         # Might not need the noise index, this is just for trials fig 
-        blueSnips = zscore(blueSnips)
-        uvSnips = zscore(uvSnips)    
     except: 
         pass
 # Individual plots to choose a representative rat 
@@ -1482,10 +1441,6 @@ fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedHAB),np.asarray(blueMeans_notdistractedHAB)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
-
-## PLOTS BLUE LINE TWICE 
-#trialsMultShadedFig(ax, [np.asarray(blueMeans_notdistractedHAB), np.asarray(blueMeans_notdistractedHAB)], ppsBlue, eventText='Not Distracted trial', linecolor = ['blue', 'blue'], errorcolor = ['lightblue', 'lightblue'], scale=0)
-
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
@@ -1502,385 +1457,970 @@ peak_notdistractedHAB, t_notdistractedHAB, pre_notdistractedHAB, post_notdistrac
 
 
 
-## Plots with MULTIPLE EVENTS ON SIGNLE PLOT
-'''
-lick
-np.asarray(blueMeansRuns)
-dis
-np.asarray(blueMeans_distractor)
-distractecd
-np.asarray(blueMeans_distracted)
-notdis
-np.asarray(blueMeans_notdistracted)
-mod
-np.asarray(blueMeans_distractorMOD)
-dis 
-np.asarray(blueMeans_distractor)
-dis 
-np.asarray(blueMeans_distractor)
-hab
-'''
 
 
-## Put this code at the bottome of ch4 licking analysis code
-
-## Licking and distractor
-fig = plt.figure(figsize=(6,3))
-ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeansRuns[2:]), np.asarray(blueMeans_distractor)], ppsBlue, eventText='Event', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Photo_licking_distractors.pdf', bbox_inches="tight")
-                    
-# Distracted and not distracted
-fig = plt.figure(figsize=(6,3))
-ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeans_notdistracted), np.asarray(blueMeans_distracted)], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Photo_distracted_notdis.pdf', bbox_inches="tight")
-
-# Modelled and distraction day
-fig = plt.figure(figsize=(6,3))
-ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorMOD),np.asarray(blueMeans_distractor) ], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Modelled_real.pdf', bbox_inches="tight")
-
-# Distraction day and habituation day 
-fig = plt.figure(figsize=(6,3))
-ax = plt.subplot(1,1,1)
-#ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(blueMeans_distractorHAB),np.asarray(blueMeans_distractor[:-1])], ppsBlue, eventText='Distractor', linecolor = ['darkturquoise','dodgerblue'], errorcolor = ['lightcyan','#D0E5FF'], scale=0)
-fig.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Draft 1/Dis_habituation.pdf', bbox_inches="tight")
 
 
-# Calculate AUC for variables / events (all and then means)
-## 1 second
-AUC5_all_distractors = []
-for rat in blueMeans_distractor:
-    AUC = np.trapz(rat[100:150])
-    AUC5_all_distractors.append(AUC)
-mean_AUC_distractors = np.mean(AUC5_all_distractors)
+## DISTRACTION 
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 20 20:17:44 2018
+@author: u1490431
+"""
+
+''' Makes all of the bar scatters, not just for distraction, for licking 
+    Need to add labels and titles so we know which plts are which 
+    Check which scripts need to be run first and make sure to comment out 
+    the seaborn import that causes the plotting problems (no black outline)
+    and strange grid 
     
-AUC5_all_licks = []
-for rat in blueMeansRuns:
-    AUC = np.trapz(rat[100:150])
-    AUC5_all_licks.append(AUC)
-mean_AUC_licks = np.mean(AUC5_all_licks)    
+'''   
     
-AUC5_all_distracted = []
-for rat in blueMeans_distracted:
-    AUC = np.trapz(rat[100:150])
-    AUC5_all_distracted.append(AUC)
-mean_AUC_distracted = np.mean(AUC5_all_distracted)  
-
-## AUC is higher for not distracted because it starts higher
-## distracted trials start lower (proceeding activity included)
-AUC5_all_notdistracted = []
-for rat in blueMeans_notdistracted:
-    AUC = np.trapz(rat[100:150])
-    AUC5_all_notdistracted.append(AUC)
-mean_AUC_notdistracted = np.mean(AUC5_all_notdistracted)  
-
-AUC5_all_distractorsMOD = []
-for rat in blueMeans_distractorMOD:
-    AUC = np.trapz(rat[100:150])
-    AUC5_all_distractorsMOD.append(AUC)
-mean_AUC_distractorsMOD = np.mean(AUC5_all_distractorsMOD)
-
-AUC5_all_distractorsHAB = []
-for rat in blueMeans_distractorHAB:
-    AUC = np.trapz(rat[100:150])
-    AUC5_all_distractorsHAB.append(AUC)
-mean_AUC_distractorsHAB = np.mean(AUC5_all_distractorsHAB)
-  
-
-## POST MEASURE AS AUC NOT AVERAGE ANYMORE 
-## AUC all after the stimulus / all after the peak 
-AUC_all_distractors20 = []
-for rat in blueMeans_distractor:
-    AUC = np.trapz(rat[100:300])
-    AUC_all_distractors20.append(AUC)
-mean_AUC_distractors20 = np.mean(AUC_all_distractors20)
-    
-AUC_all_licks20 = []
-for rat in blueMeansRuns:
-    AUC = np.trapz(rat[100:300])
-    AUC_all_licks20.append(AUC)
-mean_AUC_licks20 = np.mean(AUC_all_licks20)    
-    
-AUC_all_distracted20 = []
-for rat in blueMeans_distracted:
-    AUC = np.trapz(rat[100:300])
-    AUC_all_distracted20.append(AUC)
-mean_AUC_distracted20 = np.mean(AUC_all_distracted20)  
-
-AUC_all_notdistracted20 = []
-for rat in blueMeans_notdistracted:
-    AUC = np.trapz(rat[100:300])
-    AUC_all_notdistracted20.append(AUC)
-mean_AUC_notdistracted20 = np.mean(AUC_all_notdistracted20)  
-
-AUC_all_distractorsMOD20 = []
-for rat in blueMeans_distractorMOD:
-    AUC = np.trapz(rat[100:300])
-    AUC_all_distractorsMOD20.append(AUC)
-mean_AUC_distractorsMOD20 = np.mean(AUC_all_distractorsMOD20)
-
-AUC_all_distractorsHAB20 = []
-for rat in blueMeans_distractorHAB:
-    AUC = np.trapz(rat[100:300])
-    AUC_all_distractorsHAB20.append(AUC)
-mean_AUC_distractorsHAB20 = np.mean(AUC_all_distractorsHAB20)
-  
-#mean_AUC_distractors
-#mean_AUC_licks 
-#mean_AUC_distracted 
-#mean_AUC_notdistracted
-#mean_AUC_distractorsMOD
-#mean_AUC_distractorsHAB 
-
-## Add peak calculations, max within 5 seconds (just maximum, not subtraction or zero as zscores)
-peak_all_distractors = []
-tmax_all_distractors = []
-for rat in blueMeans_distractor:
-    peak = np.max(rat[100:150])
-    peak_all_distractors.append(peak)
-    
-    peak_range = rat[100:150]
-    a = peak_range.tolist()
-    peak_index = a.index(peak)
-    t = peak_index / 10
-    tmax_all_distractors.append(t)
-mean_peak_distractors = np.mean(peak_all_distractors)
 
 
-peak_all_licks = []
-tmax_all_licks = []
-for rat in blueMeansRuns:
-    peak = np.max(rat[100:150])
-    peak_all_licks.append(peak)
-    
-    peak_range = rat[100:150]
-    a = peak_range.tolist()
-    peak_index = a.index(peak)
-    t = peak_index / 10
-    tmax_all_licks.append(t)
-mean_peak_licks = np.mean(peak_all_licks)
+## run this script AFTER the ch4 analysis script (photometry licking days and dis, not barscatter)
+def MetaExtractorTHPH (metafile):
+    f = open(metafile, 'r')
+    f.seek(0)
+    Metafilerows = f.readlines()[1:]
+    tablerows = []
 
-peak_all_distracted = []
-tmax_all_distracted = []
-for rat in blueMeans_distracted:
-    peak = np.max(rat[100:150])
-    peak_all_distracted.append(peak)
-    
-    peak_range = rat[100:150]
-    a = peak_range.tolist()
-    peak_index = a.index(peak)
-    t = peak_index / 10
-    tmax_all_distracted.append(t)
-mean_peak_distracted = np.mean(peak_all_distracted)
+    for row in Metafilerows: 
+        items = row.split(',')
+        tablerows.append(items)
 
-peak_all_notdistracted = []
-tmax_all_notdistracted = []
-for rat in blueMeans_notdistracted:
-    peak = np.max(rat[100:150])
-    peak_all_notdistracted.append(peak)    
-    
-    peak_range = rat[100:150]
-    a = peak_range.tolist()
-    peak_index = a.index(peak)
-    t = peak_index / 10
-    tmax_all_notdistracted.append(t)
-mean_peak_notdistracted = np.mean(peak_all_notdistracted)
+    TDTFile, MedFilenames, RatID, Date, Session, Include, Licks, Totdistractors, Distracted, \
+    Percentdistracted, Note, Endcol = [],[],[],[],[],[],[],[],[],[],[],[]
 
-peak_all_distractorsMOD = []
-tmax_all_distractorsMOD = []
-for rat in blueMeans_distractorMOD:
-    peak = np.max(rat[100:150])
-    peak_all_distractorsMOD.append(peak)
+    for i, lst in enumerate(tablerows):
         
-    peak_range = rat[100:150]
-    a = peak_range.tolist()
-    peak_index = a.index(peak)
-    t = peak_index / 10
-    tmax_all_distractorsMOD.append(t)
-mean_peak_distractorsMOD = np.mean(peak_all_distractorsMOD)
+        
+        
+       TDTFile = TDTFile + [lst[0]]
+       MedFilenames = MedFilenames + [lst[1]]
+       RatID = RatID + [lst[2]]
+       Date = Date + [lst[3]]
+       Session = Session + [lst[4]]
+       Include = Include + [lst[5]]
+       Licks = Licks + [lst[6]]
+       Totdistractors = Totdistractors + [lst[7]]  
+       Distracted = Distracted + [lst[8]]
+       Percentdistracted = Percentdistracted + [lst[9]]
+       Note = Note + [lst[10]]
+       Endcol = Endcol + [lst[11]]
 
-peak_all_distractorsHAB = []
-tmax_all_distractorsHAB = []
-for rat in blueMeans_distractorHAB:
-    peak = np.max(rat[100:150])
-    peak_all_distractorsHAB.append(peak)
+ 
+    return ({'MedFilenames':MedFilenames, 'RatID':RatID, 'Date':Date, 'Session':Session, \
+             'Include':Include, 'Licks':Licks, 'PercentDistracted':Percentdistracted})
+
+
+
+def subsetter2(dictionary, dates, dis=False, verbose=False):
+    '''
+    SUBSETTER KP
+    # Subsets data according to date, reads in dictionnary produced from metafile
+    # and subsets into variable based on date(s) and drug condition 
+    # if distraction day argument is given as True adds the distractor type 
+    # to the output lists for later processing 
     
-    peak_range = rat[100:150]
-    a = peak_range.tolist()
-    peak_index = a.index(peak)
-    t = peak_index / 10
-    tmax_all_distractorsHAB.append(t)
-mean_peak_distractorsHAB = np.mean(peak_all_distractorsHAB)
+    Adapted to include & include == 1 (because not all had the same date for last lick day)
+    In metafile do not include 2.7 and 2.8 on the lick 3 day but do include them on lick 6
+     
+    
+    '''
+    subset = []
+    
+    for ind, filename in enumerate(dictionary['MedFilenames']):
+        path = medfolder + filename
+        onsets, offsets, med_dis_times, dis_type = medfilereader(path, ['b', 'c', 'i', 'j'], remove_var_header = True)  # e onset, f offset
 
-## Add barscatter plots for the peak heights, AUC in 1 second and 
-## longer AUC of all 20 seconds following events
-########################################################################
-########################################################################
-########################################################################
-
-## Modelled and distraction day 
-data_peak = [peak_all_distractorsMOD[:-1], peak_all_distractors[:-1]]
-data_20sec_AUC = [AUC_all_distractorsMOD20[:-1], AUC_all_distractors20[:-1]]
-
-## Peak modelled vs distraction day
-## Make 3 plots here 
-col3 = ['darkturquoise','dodgerblue']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(1.5,3)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05, scatterlinecolor = 'k', scatteredgecolor='k', baredgecolor = ['black']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_mod_dis.pdf', bbox_inches="tight")
-
-## Distraction and habituation day 
-data_peak = [peak_all_distractors[:-1], peak_all_distractorsHAB]
-data_20sec_AUC = [AUC_all_distractors20[:-1], AUC_all_distractorsHAB20]
-
-## Peak distraction day and habituation day 
-col3 = ['dodgerblue','lightblue']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(1.5,3)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05, scatterlinecolor = 'k', scatteredgecolor='k', baredgecolor = ['black']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_dis_hab.pdf', bbox_inches="tight")
+        if dis == True:
+            if dictionary['Date'][ind] in dates and dictionary['Include'][ind] == '1':
+                subset.append([onsets, offsets, dis_type, dictionary['RatID'][ind]])
+                
+        elif dis==False:   
+            if dictionary['Date'][ind] in dates and dictionary['Include'][ind] == '1':
+                subset.append([onsets, offsets, dictionary['RatID'][ind]])
+            
+        if verbose: #assumes true
+            print('filename, or comment ...') 
+    return subset
 
 
 
+def percentdisgroup(distractiondict):
+    ''' Discalc_sal_M == distractiondict '''
+    
+    percent_dis_group = []
+    for rat in distractiondict: 
+        percentage = len(rat[0]) / (len(rat[0])+len(rat[1])) * 100
+        percent_dis_group.append(percentage)
+    return percent_dis_group
 
-#col3 = ['darkturquoise','dodgerblue','lightblue']
-#labels = ['mod', 'dis', 'hab']
-#mpl.rcParams['font.size'] = 14
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-#ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.spines['bottom'].set_visible(False)
 
-col3 = ['darkturquoise','dodgerblue','lightblue']
+
+def disbygroup(dictionary):
+    ''' Prodcues times of distracted and not distracted as 2 lists
+    takes a dictionary of grouped rat data 
+    '''
+
+    dis = []
+    for rat in dictionary:
+        
+        discalc = distractionCalc2(rat[0])         
+        distracted, notdistracted = distractedOrNot(discalc, rat[0])
+        dis.append([distracted, notdistracted])
+        
+    return dis
+
+# Functions 
+
+"""
+This function will create bar+scatter plots when passed a 1 or 2 dimensional
+array. Data needs to be passed in as a numpy object array, e.g.
+data = np.empty((2), dtype=np.object)
+data[0] = np.array(allData['nCasLicks'][index])
+data[1] = np.array(allData['nMaltLicks'][index])
+Various options allow specification of colors and paired/unpaired plotting.
+It can return the figures, axes, bars, and scatters for further modification.
+e.g.
+fig1, ax1, barlist1, sc1 = jmf.barscatter(data)
+for i in barlist1[1].get_children():
+    i.set_color('g')
+"""
+def barscatter(data, transpose = False, unequal=False,
+                groupwidth = .75,
+                barwidth = .9,
+                paired = False,
+                spaced = False,
+                barfacecoloroption = 'same', # other options 'between' or 'individual'
+                barfacecolor = ['white'],
+                baredgecoloroption = 'same',
+                baredgecolor = [''],
+                baralpha = 1,
+                scatterfacecoloroption = 'same',
+                scatterfacecolor = ['white'],
+                scatteredgecoloroption = 'same',
+                scatteredgecolor = ['grey'],
+                scatterlinecolor = 'grey', # Don't put this value in a list
+                scattersize = 80,
+                scatteralpha = 1,
+                linewidth=1,
+                ylabel = 'none',
+                xlabel = 'none',
+                grouplabel = 'auto',
+                itemlabel = 'none',
+                barlabels = [],
+                barlabeloffset=0.1,
+                grouplabeloffset=0.2,
+                yaxisparams = 'auto',
+                show_legend = 'none',
+                xrotation=0,
+                legendloc='upper right',
+                ax=[]):
+
+    if unequal == True:
+        dims = np.ndim(data)
+        data_obj = np.ndarray((np.shape(data)), dtype=np.object)
+        for i1, dim1 in enumerate(data):
+            for i2, dim2 in enumerate(dim1):
+                data_obj[i1][i2] = np.array(dim2, dtype=np.object)
+        data = data_obj
+    
+    if type(data) != np.ndarray or data.dtype != np.object:
+        dims = np.shape(data)
+        if len(dims) == 2 or len(dims) == 1:
+            data = data2obj1D(data)
+
+        elif len(dims) == 3:
+            data = data2obj2D(data)
+              
+        else:
+            print('Cannot interpret data shape. Should be 2 or 3 dimensional array. Exiting function.')
+            return
+
+    # Check if transpose = True
+    if transpose == True:
+        data = np.transpose(data)
+        
+    # Initialize arrays and calculate number of groups, bars, items, and means
+    
+    barMeans = np.zeros((np.shape(data)))
+    items = np.zeros((np.shape(data)))
+    
+    nGroups = np.shape(data)[0]
+    groupx = np.arange(1,nGroups+1)
+
+    if len(np.shape(data)) > 1:
+        grouped = True
+        barspergroup = np.shape(data)[1]
+        barwidth = (barwidth * groupwidth) / barspergroup
+        
+        for i in range(np.shape(data)[0]):
+            for j in range(np.shape(data)[1]):
+                barMeans[i][j] = np.nanmean(data[i][j])
+                items[i][j] = len(data[i][j])
+        
+    else:
+        grouped = False
+        barspergroup = 1
+        
+        for i in range(np.shape(data)[0]):
+            barMeans[i] = np.nanmean(data[i])
+            items[i] = len(data[i])
+    
+    # Calculate x values for bars and scatters
+    
+    xvals = np.zeros((np.shape(data)))
+    barallocation = groupwidth / barspergroup
+    k = (groupwidth/2) - (barallocation/2)
+    
+    if grouped == True:
+        
+        for i in range(np.shape(data)[0]):
+            xrange = np.linspace(i+1-k, i+1+k, barspergroup)
+            for j in range(barspergroup):
+                xvals[i][j] = xrange[j]
+    else:
+        xvals = groupx
+    
+    # Set colors for bars and scatters
+     
+    barfacecolorArray = setcolors(barfacecoloroption, barfacecolor, barspergroup, nGroups, data)
+    baredgecolorArray = setcolors(baredgecoloroption, baredgecolor, barspergroup, nGroups, data)
+     
+    scfacecolorArray = setcolors(scatterfacecoloroption, scatterfacecolor, barspergroup, nGroups, data, paired_scatter = paired)
+    scedgecolorArray = setcolors(scatteredgecoloroption, scatteredgecolor, barspergroup, nGroups, data, paired_scatter = paired)
+    
+    # Initialize figure
+    if ax == []:
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+    
+    # Make bars
+    barlist = []
+    barx = []
+    for x, y, bfc, bec in zip(xvals.flatten(), barMeans.flatten(),
+                              barfacecolorArray, baredgecolorArray):
+        barx.append(x)
+        barlist.append(ax.bar(x, y, barwidth,
+                         facecolor = bfc, edgecolor = bec,
+                         zorder=-1))
+    
+    # Uncomment these lines to show method for changing bar colors outside of
+    # function using barlist properties
+    #for i in barlist[2].get_children():
+    #    i.set_color('r')
+    
+    # Make scatters
+    sclist = []
+    if paired == False:
+        for x, Yarray, scf, sce  in zip(xvals.flatten(), data.flatten(),
+                                        scfacecolorArray, scedgecolorArray):
+            for y in Yarray:
+                if spaced == True:
+                    sclist.append(ax.scatter(x+np.random.random(size=1)*barallocation, y, s = scattersize,
+                             c = scf,
+                             edgecolors = sce,
+                             zorder=20))
+                else:
+                     sclist.append(ax.scatter(x, y, s = scattersize,
+                                     c = scf,
+                                     edgecolors = sce,
+                                     zorder=20))
+
+    elif grouped == True:
+        for x, Yarray, scf, sce in zip(xvals, data, scfacecolorArray, scedgecolorArray):
+            for y in np.transpose(Yarray.tolist()):
+                sclist.append(ax.plot(x, y, '-o', markersize = scattersize/10,
+                         color = scatterlinecolor,
+                         linewidth=linewidth,
+                         markerfacecolor = scf,
+                         markeredgecolor = sce,
+                         zorder=20))
+    elif grouped == False:
+        for n,_ in enumerate(data[0]):
+            y = [y[n-1] for y in data]
+            sclist.append(ax.plot(xvals, y, '-o', markersize = scattersize/10,
+                         color = scatterlinecolor,
+                         linewidth=linewidth,
+                         markerfacecolor = scfacecolorArray[0],
+                         markeredgecolor = scedgecolorArray[0],
+                         zorder=20))
+    
+    # Label axes
+    if ylabel != 'none':
+        plt.ylabel(ylabel)
+    
+    if xlabel != 'none':
+        plt.xlabel(xlabel)
+    
+    # Set range and tick values for Y axis
+    if yaxisparams != 'auto':
+        ax.set_ylim(yaxisparams[0])
+        plt.yticks(yaxisparams[1])
+       
+    # X ticks
+    ax.tick_params(
+        axis='x',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        bottom='off',      # ticks along the bottom edge are off
+        top='off') # labels along the bottom edge are off
+
+    if grouplabel == 'auto':
+        plt.tick_params(labelbottom='off')
+    else:
+        if len(barlabels) > 0:
+            plt.tick_params(labelbottom='off')
+            yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+            offset = ax.get_ylim()[0] - yrange*grouplabeloffset
+            for idx, label in enumerate(grouplabel):
+                ax.text(idx+1, offset, label, va='top', ha='center')
+        else:
+            plt.xticks(range(1,nGroups+1), grouplabel)
+        
+    if len(barlabels) > 0:
+        if len(barlabels) != len(barx):
+            print('Wrong number of bar labels for number of bars!')
+        else:
+            yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+            offset = ax.get_ylim()[0] - yrange*barlabeloffset
+            for x, label in zip(barx, barlabels):
+                ax.text(x, offset, label, va='top', ha='center',rotation=xrotation)
+    
+    # Hide the right and top spines and set bottom to zero
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_position('zero')
+    
+    if show_legend == 'within':
+        if len(itemlabel) != barspergroup:
+            print('Not enough item labels for legend!')
+        else:
+            legendbar = []
+            legendtext = []
+            for i in range(barspergroup):
+                legendbar.append(barlist[i])
+                legendtext.append(itemlabel[i])
+            plt.legend(legendbar, legendtext, loc=legendloc)
+    
+    return ax, barx, barlist, sclist
+
+#plt.savefig('foo.png')
+        
+# To do
+# check if n's are the same for paired and if not default to unpaired
+# add color options for scatters
+# add alpha options etc
+# add axis options
+# remove white background
+# work out how to export or save as pdf, tiff, eps etc
+# work out how to return handles to scatters so can be altered outside of function
+# make help doc
+# make html file to show usage using ijupyt
+      
+def setcolors(coloroption, colors, barspergroup, nGroups, data, paired_scatter = False):
+            
+    nColors = len(colors)
+    
+    if (paired_scatter == True) & (coloroption == 'within'):
+        print('Not possible to make a Paired scatter plot with Within setting.')
+        coloroption = 'same'
+        
+    if coloroption == 'within':
+        if nColors < barspergroup:
+            print('Not enough colors for this option! Reverting to one color.')
+            coloroption = 'same'
+        elif nColors > barspergroup:
+            colors = colors[:barspergroup]
+        coloroutput = [colors for i in data]
+        coloroutput = list(chain(*coloroutput))
+        
+    if coloroption == 'between':
+        if nColors < nGroups:
+            print('Not enough colors for this option! Reverting to one color.')
+            coloroption = 'same'
+        elif nColors > nGroups:
+            colors = colors[:nGroups]
+        if paired_scatter == False:
+            coloroutput = [[c]*barspergroup for c in colors]
+            coloroutput = list(chain(*coloroutput))
+        else:
+            coloroutput = colors
+            
+    if coloroption == 'individual':
+        if nColors < nGroups*barspergroup:
+            print('Not enough colors for this color option')
+            coloroption = 'same'
+        elif nColors > nGroups*barspergroup:
+            coloroutput = colors[:nGroups*barspergroup]
+        else: 
+            coloroutput = colors
+    
+    if coloroption == 'same':
+        coloroutput = [colors[0] for x in range(len(data.flatten()))]
+
+    return coloroutput
+
+def data2obj1D(data):
+    obj = np.empty(len(data), dtype=np.object)
+    for i,x in enumerate(data):
+        obj[i] = np.array(x)  
+    return obj
+
+def data2obj2D(data):
+    obj = np.empty((np.shape(data)[0], np.shape(data)[1]), dtype=np.object)
+    for i,x in enumerate(data):
+        for j,y in enumerate(x):
+            obj[i][j] = np.array(y)
+    return obj
+
+
+
+
+################################################################################################
+################################################################################################
+
+## BEHAVIOUR SUBSETTING, PERCENT DISTRACTED AND PLOTS [THPH1, THPH2]
+
+metafile = '/Volumes/KP_HARD_DRI/kp259/THPH1AND2/THPH1&2Metafile.csv'
+extract_data = MetaExtractorTHPH(metafile)
+# Folder with all medfiles (THPH1 and THPH2)
+medfolder = '/Volumes/KP_HARD_DRI/kp259/THPH1AND2/med/'
+
+
+
+''' 
+  Info DPCP1(16) and DPCP2(16) males, DPCP3(24) females :
+      
+  THPH1      |THPH2.1 - 2.6|THPH2.7 - 2.8|CONDITION
+  -----------|-------------|-------------|-----------
+  170620     |170809       |170814       |last lick
+  170621     |170810       |170815       |dis
+  170622     |170811       |170816       |hab 1
+  
+  All included, can later only subset the first 12 rats and ignore the 
+  unequal numbers from no habituation on rat 2.8
+'''
+
+
+last_lick = subsetter2(extract_data, ['170620', '170809', '170814'])
+distraction= subsetter2(extract_data, ['170621', '170810', '170815'], dis=True)
+habituation = subsetter2(extract_data, ['170622', '170811', '170806'], dis=True)
+
+
+discalcLick = []
+discalcDis = []
+discalcHab = []
+
+for rat in last_lick:
+    discalc = distractionCalc2(rat[0])
+    distracted, notdistracted = distractedOrNot(discalc, rat[0])
+    discalcLick.append([distracted, notdistracted])
+
+for rat in distraction:
+    discalc = distractionCalc2(rat[0])
+    distracted, notdistracted = distractedOrNot(discalc, rat[0])
+    discalcDis.append([distracted, notdistracted])
+    
+for rat in habituation:
+    discalc = distractionCalc2(rat[0])
+    distracted, notdistracted = distractedOrNot(discalc, rat[0])
+    discalcHab.append([distracted, notdistracted])    
+
+percentdisLick = []
+percentdisDis = []
+percentdisHab = [] 
+
+for rat in discalcLick:
+    percent = len(rat[0]) / (len(rat[0])+len(rat[1])) * 100
+    percentdisLick.append(percent)
+
+for rat in discalcDis:
+    percent = len(rat[0]) / (len(rat[0])+len(rat[1])) * 100
+    percentdisDis.append(percent)
+    
+for rat in discalcHab:
+    percent = len(rat[0]) / (len(rat[0])+len(rat[1])) * 100
+    percentdisHab.append(percent)    
+    
+
+##########################################################################################
+
+# PERCENT DISTRACTED - THPH1 AND THPH2
+    
+# For barscatter plots excluded rats 2.7 and 2.8 (as not all point on all days)
+data = [[percentdisLick[0:12], percentdisDis[0:12], percentdisHab]]
+
+col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
+col3 = ['#a2e283','#4cbb17','#257200']
 labels = ['mod', 'dis', 'hab']
 mpl.rcParams['font.size'] = 14
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='AUC (unit?)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(data, transpose=False, ax=ax,paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/AUC_Bar_mod_dis_hab.pdf', bbox_inches="tight")
-
-''' issue with the AUC -400? Why are 1 sec and 20 sec the same'''
-
 #figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
 
-########################################################################
-########################################################################
-########################################################################
+   
+ # Barscatters to make: 
 
-## Distracted vs not distracted
-data_peak = [[ peak_all_notdistracted,peak_all_distracted]]
-data_1sec_AUC = [[AUC_all_notdistracted,AUC_all_distracted]]
-data_20sec_AUC = [[AUC_all_notdistracted20,AUC_all_distracted20]]
-# Make 3 plots here
-## Make 3 plots here 
-col3 = ['darkturquoise','dodgerblue']
-labels = ['mod', 'dis', 'hab']
+## PERHAPS only care about distractORS as not many distracted trials on this habituation day? 
+
+## UNEQUAL NUMBERS HERE, ISSUE FOR BARSCATTER - Maybe just index missing the LAST rat for ALL comparisons 
+
+################################################################################################
+################################################################################################
+
+## Short versus long runs of licks ORANGES X 2 (ORANGE AND BRICK OR GREY AND BRICK)
+def MultBy100(list):
+    output = [x*100 for x in list]
+    
+    return output
+shortVlongPeak = [MultBy100(peak_short_runs), MultBy100(peak_long_runs)]
+shortVlongt = [t_short_runs, t_long_runs]
+shortVlongPre = [MultBy100(pre_short_runs), MultBy100(pre_long_runs)]
+shortVlongPost = [MultBy100(post_short_runs), MultBy100(post_long_runs)]
+
+mpl.rcParams['figure.subplot.wspace'] = 0.6
+mpl.rcParams['figure.subplot.right'] = 1
 mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(1.5,3)) ### x,y
-#ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05, scatterlinecolor = 'k', scatteredgecolor='k', baredgecolor = ['black']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_dis_notdis.pdf', bbox_inches="tight")
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
 
-#col3 = ['darkturquoise','dodgerblue']
-#labels = ['mod', 'dis', 'hab']
-#mpl.rcParams['font.size'] = 14
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-#ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.spines['bottom'].set_visible(False)
-col3 = ['dodgerblue', 'darkturquoise']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='AUC (unit?)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/AUC_Bar_dis_notdis.pdf', bbox_inches="tight")
+labels = []
+ax[0], barx, barlist, sclist = barscatter(shortVlongPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(shortVlongt, ax=ax[1], transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(shortVlongPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(shortVlongPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 
-########################################################################
-########################################################################
-########################################################################
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
 
-# Distractors vs licks 
-data_peak = [peak_all_licks[2:],peak_all_distractors, ]
-data_1sec_AUC = [AUC_all_licks[2:],AUC_all_distractors]
-data_20sec_AUC = [AUC_all_licks20[2:],AUC_all_distractors20]
-# Make 3 plots here 
-## Make 3 plots here 
-col3 = ['darkturquoise','dodgerblue']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_peak, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Peak (z-score)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
-figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/Peak_Bar_lick_dis.pdf', bbox_inches="tight")
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
 
-#col3 = ['#FFE5A5','#FFE5A5','#FFE5A5']
-#labels = ['mod', 'dis', 'hab']
-#mpl.rcParams['font.size'] = 14
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-#ax, barx, barlist, sclist = barscatter(data_1sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='Percent distracted (%)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.spines['bottom'].set_visible(False)
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortVsLongPeaksBarScatter.pdf', bbox_inches="tight")
 
-col3 = ['darkturquoise','dodgerblue']
-labels = ['mod', 'dis', 'hab']
-mpl.rcParams['font.size'] = 14
-figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(4,5)) ### x,y
-ax, barx, barlist, sclist = barscatter(data_20sec_AUC, transpose=False, ax=ax, paired=True, barfacecolor=col3, barlabels=labels,barfacecoloroption='individual',  ylabel='AUC (unit?)', itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax.spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KP_HARD_DRI/distraction_paper/AUC_Bar_lick_dis.pdf', bbox_inches="tight")
+################################################################################################
+################################################################################################
 
-'''
-## Write list of numbers to export into excel 
-## Peak heights 
-peak_all_distractorsMOD, 
-peak_all_distractors, 
-peak_all_distractorsHAB
-peak_all_distracted, 
-peak_all_notdistracted, 
-peak_all_licks
+## All runs versus all distractors (BRICK AND GREEN or ORANGE AND GREEN)
+runVdisPeak = [MultBy100(peak_runs), MultBy100(peak_distractor)]
+runVdist = [t_runs, t_distractor]
+runVdisPre = [MultBy100(pre_runs), MultBy100(pre_distractor)]
+runVdisPost = [MultBy100(post_runs), MultBy100(post_distractor)]
 
-AUC_all_distractorsMOD, 
-AUC_all_distractors, 
-AUC_all_distractorsHAB
-AUC_all_distracted, 
-AUC_all_notdistracted, 
-AUC_all_licks
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
 
-AUC_all_distractorsMOD20, 
-AUC_all_distractors20, 
-AUC_all_distractorsHAB20
-AUC_all_distracted20, 
-AUC_all_notdistracted20, 
-AUC_all_licks20
-'''
+labels = []
+ax[0], barx, barlist, sclist = barscatter(runVdisPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(runVdist, ax=ax[1], transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(runVdisPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(runVdisPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 
-## measuring time to decay?
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
 
-# how long does it take for the snips to reach 10% of the baseline?
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
 
-average baseline period (10 seconds before)
-
-in the snip if > baseline * 0.9 lista.append(1)
-else if < 0.9 lista.append(0)
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/RunVsDisPeaksBarScatter.pdf', bbox_inches="tight")
 
 
-slope?/??
+################################################################################################
+################################################################################################
+
+## Distracted vs not distracted (GREEN X 2)
+disVnotPeak = [MultBy100(peak_notdistracted),MultBy100(peak_distracted)] 
+disVnott = [t_notdistracted,t_distracted]
+disVnotPre = [MultBy100(pre_notdistracted),MultBy100(pre_distracted)]
+disVnotPost = [MultBy100(post_notdistracted),MultBy100(post_distracted)]
+
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(disVnotPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(disVnott, ax=ax[1], transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(disVnotPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(disVnotPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsNotDisPeaksBarScatter.pdf', bbox_inches="tight")
+
+
+################################################################################################
+################################################################################################
+
+## Modelled versus distracion day presented distractors (GREY and GREEN)
+modVdisPeak = [MultBy100(peak_distractorMOD), MultBy100(peak_distractor)]
+modVdist = [t_distractorMOD, t_distractor]
+modVdisPre = [MultBy100(pre_distractorMOD), MultBy100(pre_distractor)]
+modVdisPost = [MultBy100(post_distractorMOD), MultBy100(post_distractor)]
+
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(modVdisPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(modVdist, ax=ax[1], transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(modVdisPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(modVdisPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ModVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+
+################################################################################################
+################################################################################################
+## Distraction day vs habituation day (GREEN, light and dark)
+disVhabPeak = [MultBy100(peak_distractor), MultBy100(peak_distractorHAB)]
+disVhabt = [t_distractor, t_distractorHAB]
+disVhabPre = [MultBy100(pre_distractor), MultBy100(pre_distractorHAB)]
+disVhabPost = [MultBy100(post_distractor), MultBy100(post_distractorHAB)] 
+
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(disVhabPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(disVhabt, ax=ax[1], transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(disVhabPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(disVhabPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
+
+#???????
+
+# ANALYSIS FOR WHITE NOISE VS NON-WHITE NOISE HERE 
+# (7) 4 bars --> wn vs nwn dis day vs hab day - peak, t, pre, post 
 
 
 
-NOTES
-Snips are all zscored (as they are made) so there is an issue with AUC as it comes from the zscore values 
-and not from the deltaf/f values (which the peaks do and are significant)
+## Correlation between PERCENT DISTRACTED and DISTRCTOR PEAK 
+import matplotlib as mpl 
+from scipy import stats
+import seaborn as sn
+slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distractor))
+## Plot the scatter
+plt.plot(percentdisDis[2:], MultBy100(peak_distractor),'o', color='limegreen')
+## Add line of best fit
+plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'limegreen')
 
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Percent distracted', fontsize=14)
+plt.ylabel('Peak response to distractors (% ΔF)', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractorPeak.pdf', bbox_inches="tight")
+plt.show()
+print('Linear regression, Percent distracted VS distractor peak')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+
+
+## Correlation between PERCENT DISTRACTED and DISTRACTED PEAK 
+slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distracted))
+## Plot the scatter
+plt.plot(percentdisDis[2:], MultBy100(peak_distracted),'o', color='#257200')
+## Add line of best fit
+plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]) ,'#257200')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Percent distracted', fontsize=14)
+plt.ylabel('Peak response distracted (% ΔF)', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractedPeak.pdf', bbox_inches="tight")
+plt.show()
+print('Linear regression, Percent distracted VS distracted peak')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+
+
+
+
+## Correlation between PERCENT DISTRACTED and RUNS PEAK 
+slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_runs))
+## Plot the scatter
+plt.plot(percentdisDis[2:], MultBy100(peak_runs),'o', color='darkorange')
+## Add line of best fit
+plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'darkorange')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Percent distracted', fontsize=14)
+plt.ylabel('Peak response runs (% ΔF)', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_RunsPeak.pdf', bbox_inches="tight")
+
+plt.show()
+print('Linear regression, Percent distracted VS all runs peak')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+
+
+################################################################################################
+################################################################################################
+
+
+#  White noise separation - thph1 and thph2
+
+def discalc_modalities(dictionary, modalitykey):
+    ''' Calculates distractors, distracted and modalities for dictionary of 
+    rats by group for just distraction day only 
+    
+    Calculates a grouped percentage of each modality and how distracted 
+    by that modality rats are on average (by group)
+    
+    '''
+    percent_dis_whitenoise_group = []
+    percent_dis_tone_group = []
+    percent_dis_combined_group = []
+    percent_dis_all_non_WN_group = []
+    discalcgroup = []
+    ## SAL MALES - DISTRACTION DAY ONLY - DISTRACTOR TYPE ANALYSIS INCLUDED
+# Finds distracted or not (corrects for med slipping issue)
+    for rat in dictionary:
+        print('a')
+        discalc = distractionCalc2(rat[0])
+        distracted, notdistracted = distractedOrNot(discalc, rat[0])
+        print(len(distracted), len(notdistracted))
+      #  work out percentage and add this too 
+        discalcgroup.append([distracted, notdistracted])
+    
+        dis_numeric = []
+        ndis_numeric = []
+    # Modality analysis - calculates which distractors contain different features (whitenoise, tone or combination)
+    # Then works out on how many of these trials rats are distracted (individual) before creating a mean 
+    # Tr and except because there are some cases where there are ZERO distracted or non distracted trials (or both)
+        for d in distracted:
+                        try:
+                            dis_numeric.append([rat[2][idx] for idx, val in enumerate(discalc) if val == d][0])
+                        except IndexError:
+                            pass
+                
+      
+        for nd in notdistracted:
+                        try:
+                             ndis_numeric.append([rat[2][idx] for idx, val in enumerate(discalc) if val == nd][0])   
+                        except IndexError:
+                            pass
+                        
+        # Makes the distracted trial types into integers 
+        dis_numeric = [int(d) for d in dis_numeric]
+        # Counts to work out percentages after finding how many are each modality 
+        d_whitenoise_count = 0
+        d_tone_count = 0
+        d_combined_count = 0 
+        
+        dis_type_text = [] #labels the distypes with text labels and adds to the counts
+        for d in dis_numeric:
+            if d in modalitykey['whitenoise']:
+                dis_type_text.append('whitenoise')
+                d_whitenoise_count += 1
+            elif d in modalitykey['tone']:
+                dis_type_text.append('tone')
+                d_tone_count += 1
+            elif d in modalitykey['combined3']:
+                dis_type_text.append('combined3')
+                d_combined_count += 1 
+   # Non-distracted trials by modality 
+        ndis_numeric = [int(d) for d in ndis_numeric]
+        nd_whitenoise_count = 0
+        nd_tone_count = 0
+        nd_combined_count = 0 
+        
+        ndis_type_text = []
+        for d in ndis_numeric:
+            if d in modalitykey['whitenoise']:
+                ndis_type_text.append('whitenoise')
+                nd_whitenoise_count += 1
+            elif d in modalitykey['tone']:
+                ndis_type_text.append('tone')
+                nd_tone_count += 1
+            elif d in modalitykey['combined3']:
+                ndis_type_text.append('combined3')
+                nd_combined_count += 1 
+ 
+## DEBUGGING SECTION        
+
+# Not an issue if there are zero distracted trials, because calculates 0%
+# without problem, will be an issue if both 0 dis and 0 non-dis (because no 
+# trials of that modality, need to exclude)
+         
+#        if d_whitenoise_count < 1:
+#            print('y', d_whitenoise_count, nd_whitenoise_count)
+#        if d_tone_count < 1:
+#            print('x', d_tone_count, nd_tone_count)
+#        if d_combined_count < 1:
+#            print('z', d_combined_count, nd_combined_count)
+ 
+# WHITENOISE        
+        if nd_whitenoise_count > 0:            
+            percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
+        elif d_whitenoise_count < 1:
+            try:
+                percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
+            except ZeroDivisionError:
+                print('oops')
+                percent_distracted_whitenoise = -1
+        elif d_whitenoise_count > 1:
+            percent_distracted_whitenoise = 100 
+# TONE            
+        ## what to do if both zero 
+        if nd_tone_count > 0:
+            percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
+        elif d_tone_count < 1:
+            try:
+                percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
+            except ZeroDivisionError:
+                print('oopsT')
+                percent_distracted_tone = -1
+        elif d_tone_count > 1:
+            percent_distracted_tone = 100 
+
+# COMBINED        
+        if nd_combined_count > 0:
+            percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+
+        elif d_combined_count < 1:
+            try:
+                percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+            except ZeroDivisionError:
+                print('oopsC')
+                percent_distracted_combined = -1
+        elif d_combined_count > 1:
+            percent_distracted_combined = 100 
+
+# NON WHITE NOISE
+
+        if nd_combined_count > 0 or nd_tone_count > 0:
+            percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
+                
+        elif d_combined_count < 1 and d_tone_count < 1:
+            print('all less')
+            try:
+                percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
+            except ZeroDivisionError:
+                print('oopsNWN')
+                percent_distracted_all_non_WN = -1     
+        elif d_combined_count or d_tone_count > 1:
+            percent_distracted_all_non_WN = 100
+     
+      
+        percent_dis_whitenoise_group.append(percent_distracted_whitenoise)
+        percent_dis_tone_group.append(percent_distracted_tone)
+        percent_dis_combined_group.append(percent_distracted_combined)
+        percent_dis_all_non_WN_group.append(percent_distracted_all_non_WN)
+    
+## Removing the occurrences of -1 which were added to account for zero distractors
+    
+    percent_dis_whitenoise_group = [x for x in percent_dis_whitenoise_group if x != -1]
+    percent_dis_tone_group = [x for x in percent_dis_tone_group if x != -1]
+    percent_dis_combined_group = [x for x in percent_dis_combined_group if x != -1]
+    percent_dis_all_non_WN_group = [x for x in percent_dis_all_non_WN_group if x != -1]       
+
+        
+    mean_percent_WHITENOISE = np.mean(percent_dis_whitenoise_group) # the average percentage of JUST whitenoise trials that rats are distracted on 
+    mean_percent_TONE = np.mean(percent_dis_tone_group)
+    mean_percent_COMBINED = np.mean(percent_dis_combined_group)
+    mean_percent_ALL_NON_WN = np.mean(percent_dis_all_non_WN_group)
+    
+    return discalcgroup, percent_dis_whitenoise_group, percent_dis_tone_group, \
+            percent_dis_combined_group, percent_dis_all_non_WN_group, mean_percent_WHITENOISE, mean_percent_TONE, \
+            mean_percent_COMBINED, mean_percent_ALL_NON_WN
+
+
+
+################################################################################################
+################################################################################################
+
+# Distraction day analysis (including modalities)
+modalitykey = {'whitenoise':[1,4], 'tone':[2,5], 'combined3':[3,6]}
+
+
+discalcgroup, percent_dis_whitenoise_group, percent_dis_tone_group, \
+percent_dis_combined_group, percent_dis_all_non_WN_group, mean_percent_WHITENOISE, \
+mean_percent_TONE, mean_percent_COMBINED, mean_percent_ALL_NON_WN = discalc_modalities(distraction, modalitykey)

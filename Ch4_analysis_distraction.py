@@ -31,7 +31,8 @@ def MetaExtractorTHPH (metafile):
     Percentdistracted, Note, Endcol = [],[],[],[],[],[],[],[],[],[],[],[]
 
     for i, lst in enumerate(tablerows):
-        
+
+      
         
         
        TDTFile = TDTFile + [lst[0]]

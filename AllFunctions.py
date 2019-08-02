@@ -6,7 +6,7 @@ Created on Thu Mar  8 09:16:54 2018
 @author: u1490431
 """
 '''
-   All imports and all functions needed for MMiN18 poster figures
+   All imports and all functions needed for Distraction Paper 
    Run this script before anything else 
    
    Contains:
