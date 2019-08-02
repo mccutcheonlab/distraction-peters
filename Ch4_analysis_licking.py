@@ -1865,3 +1865,22 @@ AUC_all_distracted20,
 AUC_all_notdistracted20, 
 AUC_all_licks20
 '''
+
+## measuring time to decay?
+
+# how long does it take for the snips to reach 10% of the baseline?
+
+average baseline period (10 seconds before)
+
+in the snip if > baseline * 0.9 lista.append(1)
+else if < 0.9 lista.append(0)
+
+
+slope?/??
+
+
+
+NOTES
+Snips are all zscored (as they are made) so there is an issue with AUC as it comes from the zscore values 
+and not from the deltaf/f values (which the peaks do and are significant)
+
