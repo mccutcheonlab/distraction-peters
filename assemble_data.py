@@ -14,8 +14,6 @@ import dill
 
 from fx4assembly import *
 
-
-
 def metafilemaker(xlfile, metafilename, sheetname='metafile', fileformat='csv'):
     with xlrd.open_workbook(xlfile) as wb:
         sh = wb.sheet_by_name(sheetname)  # or wb.sheet_by_name('name_of_the_sheet_here')
@@ -66,6 +64,7 @@ def loaddata(tdtfile, SigBlue, SigUV):
         data=[]
         dataUV=[]
         ttls=[]
+        fs=[]
         
     return data, dataUV, fs, ttls
 
@@ -96,7 +95,6 @@ def process_rat(row_data, sessiontype='dis'):
     
     return ratdata
 
-
 # declares locations for data and required files
 raw_datafolder = 'D:\\DA_and_Reward\\kp259\\THPH1AND2\\tdtfiles\\'
 folder = "C:\\Github\\Distraction-Paper\\"
@@ -122,6 +120,8 @@ for idx, row in enumerate(rows):
     elif row[5] == 'D2':
         rows_hab.append(idx)
 
+# makes dictionaries that include data for individual rats for each day (e.g.
+# modelled day, distraction day, and habituation day)
 disDict = {}
 modDict = {}
 habDict = {}
@@ -137,7 +137,10 @@ for idx in rows_dis:
 for idx in rows_hab:       
     ratdata = process_rat(rows[idx])
     habDict[ratdata['rat']] = ratdata
-      
+    
+# Saves pickle file with three dictionaries that can be used by Kate's old script
+# or new scripts for further analysis
+    
 savefile=True
 outputfile=datafolder+'distraction_data.pickle'
 
@@ -145,5 +148,9 @@ if savefile == True:
     pickle_out = open(outputfile, 'wb')
     dill.dump([modDict, disDict, habDict], pickle_out)
     pickle_out.close()
+
+
+
+
 
         
