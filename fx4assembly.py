@@ -60,26 +60,22 @@ def distractionCalc2(licks, pre=1, post=1):
     
     return d
 
-def distractedOrNot(distractors, licks):
-    distracted = []
-    notdistracted = []
-    lickList = []
-    for l in licks:
-        lickList.append(l)
+def distracted_or_not(distractors, licks, delay=1):   
+    pdp = [] # post-distraction pause
+    distractedArray = []
+
+    for d in distractors:               
+        try:
+            pdp.append([i-d for i in licks if (i > d)][0])
+        except IndexError:
+            pdp.append(3600-d) # designates end of session as max pdp
+
+    distracted_boolean_array = np.array([i>delay for i in pdp], dtype=bool)
     
-
-    for index, distractor in enumerate(distractors):
-        if distractor in licks:
-
-            ind = lickList.index(distractor)
-            try:
-                if (licks[ind+1] - licks[ind]) > 1:
-                    distracted.append(licks[ind])
-                else:
-                    if (licks[ind+1] - licks[ind]) < 1:
-                        notdistracted.append(licks[ind])
-            except IndexError:
-                print('last lick was a distractor!!!')
-                distracted.append(licks[ind])
-
-    return(distracted, notdistracted)
+    distracted = [d for d,l in zip(distractors, distracted_boolean_array) if l]
+    notdistracted = [d for d,l in zip(distractors, distracted_boolean_array) if not l] 
+    
+    if np.isnan(pdp)[-1] == 1: 
+        distracted_boolean_array[-1] = True
+    
+    return [distracted, notdistracted], distracted_boolean_array, pdp

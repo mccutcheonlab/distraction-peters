@@ -185,7 +185,7 @@ def mastersnipper(data, dataUV, data_filt,
     
     if len(events) < 1:
         print('Cannot find any events. All outputs will be empty.')
-        blueTrials, uvTrials, noiseindex, diffTrials, peak, latency = ([] for i in range(5))
+        blueTrials, uvTrials, filtTrials, filtTrials_z, filtTrials_z_adjBL, filt_avg, filt_avg_z, noiseindex, peak, latency = ([] for i in range(10))
     else:
         if verbose: print('{} events to analyze.'.format(len(events)))
         
@@ -375,15 +375,17 @@ for d, s in zip([modDict, disDict, habDict],
         
         ratdata['snips_distractors'] = mastersnipper(data, dataUV, data_filt,
                                                      t2sMap, fs, bgMAD,
-                                                     ratdata['distractors'])
+                                                     ratdata['distractors'],
+                                                     latency_events=ratdata['licks'],
+                                                     latency_direction='post')
         
         ratdata['snips_distracted'] = mastersnipper(data, dataUV, data_filt,
-                                                     t2sMap, fs, bgMAD,
-                                                     ratdata['distracted'])
+                                                      t2sMap, fs, bgMAD,
+                                                      ratdata['distracted'])
         
         ratdata['snips_not-distracted'] = mastersnipper(data, dataUV, data_filt,
-                                                     t2sMap, fs, bgMAD,
-                                                     ratdata['notdistracted'])
+                                                      t2sMap, fs, bgMAD,
+                                                      ratdata['notdistracted'])
 
 
 save_total_file=False
@@ -410,4 +412,5 @@ if save_reduced_file == True:
     dill.dump([modDict, disDict, habDict], pickle_out)
     pickle_out.close()
     
+
 
