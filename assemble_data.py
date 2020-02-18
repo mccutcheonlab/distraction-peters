@@ -91,7 +91,7 @@ def process_rat(row_data, sessiontype='dis'):
     
     # Calculates distractors and whether distracted or not
     ratdata['distractors'] = distractionCalc2(ratdata['licks']) 
-    [ratdata['distracted'], ratdata['notdistracted']], ratdata['d_bool_array'], ratdata['pdp']  = distracted_or_not(ratdata['distractors'], ratdata['licks'])
+    [ratdata['distracted'], ratdata['notdistracted']], ratdata['d_bool_array'], ratdata['pdp'], ratdata['pre_dp']  = distracted_or_not(ratdata['distractors'], ratdata['licks'])
     
     return ratdata
 

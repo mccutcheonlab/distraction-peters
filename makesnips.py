@@ -173,11 +173,11 @@ def mastersnipper(data, dataUV, data_filt,
                   t2sMap, fs, bgMAD,
                   events,
                   bins=300,
+                  baselinebins=100,
                   preTrial=10,
-                  trialLength=30,
+                  trialLength=30,    
                   threshold=8,
                   peak_between_time=[0, 1],
-                  output_as_dict=True,
                   latency_events=[],
                   latency_direction='pre',
                   max_latency=30,
@@ -209,7 +209,7 @@ def mastersnipper(data, dataUV, data_filt,
                                    trialLength=trialLength,
                                    adjustBaseline=False)
         
-        filtTrials_z = zscore(filtTrials)
+        filtTrials_z = zscore(filtTrials, baseline_points=baselinebins)
         filtTrials_z_adjBL = zscore(filtTrials, baseline_points=50)
 
         sigSum = [np.sum(abs(i)) for i in filtTrials]
@@ -250,21 +250,19 @@ def mastersnipper(data, dataUV, data_filt,
         else:
             print('No latency events found')
 
-    if output_as_dict == True:
-        output = {}
-        output['blue'] = blueTrials
-        output['uv'] = uvTrials
-        output['filt'] = filtTrials
-        output['filt_z'] = filtTrials_z
-        output['filt_z_adjBL'] = filtTrials_z_adjBL
-        output['filt_avg'] = filt_avg
-        output['filt_avg_z'] = filt_avg_z
-        output['noise'] = noiseindex
-        output['peak'] = peak
-        output['latency'] = latency
-        return output
-    else:
-        return blueTrials, blueTrials_raw, blueTrials_z, blueTrials_z_adjBL, uvTrials, uvTrials_raw, uvTrials_z, noiseindex, diffTrials, peak, latency
+    output = {}
+    output['blue'] = blueTrials
+    output['uv'] = uvTrials
+    output['filt'] = filtTrials
+    output['filt_z'] = filtTrials_z
+    output['filt_z_adjBL'] = filtTrials_z_adjBL
+    output['filt_avg'] = filt_avg
+    output['filt_avg_z'] = filt_avg_z
+    output['noise'] = noiseindex
+    output['peak'] = peak
+    output['latency'] = latency
+    
+    return output
 
 def zscore(snips, baseline_points=100):
     
@@ -361,7 +359,10 @@ for d, s in zip([modDict, disDict, habDict],
         ratdata['lickdata'] = lickCalc(ratdata['licks'],
                                        offset=ratdata['licks_off'])
         
-        bins = 300
+        bins=200
+        baselinebins=40
+        preTrial=5
+        trialLength=20
         
         t2sMap = time2samples(data, tick, fs)
         
@@ -376,19 +377,31 @@ for d, s in zip([modDict, disDict, habDict],
         ratdata['snips_distractors'] = mastersnipper(data, dataUV, data_filt,
                                                      t2sMap, fs, bgMAD,
                                                      ratdata['distractors'],
+                                                     bins=200,
+                                                     baselinebins=40,
+                                                     preTrial=5,
+                                                     trialLength=20,                                                    
                                                      latency_events=ratdata['licks'],
                                                      latency_direction='post')
         
         ratdata['snips_distracted'] = mastersnipper(data, dataUV, data_filt,
                                                       t2sMap, fs, bgMAD,
-                                                      ratdata['distracted'])
+                                                      ratdata['distracted'],
+                                                      bins=200,
+                                                      baselinebins=40,
+                                                      preTrial=5,
+                                                      trialLength=20)
         
         ratdata['snips_not-distracted'] = mastersnipper(data, dataUV, data_filt,
                                                       t2sMap, fs, bgMAD,
-                                                      ratdata['notdistracted'])
+                                                      ratdata['notdistracted'],
+                                                      bins=200,
+                                                      baselinebins=40,
+                                                      preTrial=5,
+                                                      trialLength=20)
 
 
-save_total_file=False
+save_total_file=True
 save_reduced_file=True
 
 # saves pickled file including full dictionaries

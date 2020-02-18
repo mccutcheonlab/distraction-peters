@@ -36,6 +36,10 @@ def remcheck(val, range1, range2):
             return False
 
 def distractionCalc2(licks, pre=1, post=1):
+    """
+    Works out from list of lick timestamps when distractors should occur
+    """
+    
     licks = np.insert(licks, 0, 0)
     b = 0.001
     d = []
@@ -62,13 +66,20 @@ def distractionCalc2(licks, pre=1, post=1):
 
 def distracted_or_not(distractors, licks, delay=1):   
     pdp = [] # post-distraction pause
+    pre_dp = [] # pre-distraction pause
     distractedArray = []
 
     for d in distractors:               
         try:
-            pdp.append([i-d for i in licks if (i > d)][0])
+            pdp.append([lick - d for lick in licks if (lick > d)][0])
         except IndexError:
             pdp.append(3600-d) # designates end of session as max pdp
+            
+        distractor_index = [idx for idx, lick in enumerate(licks) if lick == d][0]
+        try:
+            pre_dp.append(-[ili for ili in np.diff(licks[distractor_index::-1]) if ili < -1][0])
+        except IndexError:
+            pre_dp.append(licks[0]) # if it is at the start of session then uses time from start 
 
     distracted_boolean_array = np.array([i>delay for i in pdp], dtype=bool)
     
@@ -77,5 +88,10 @@ def distracted_or_not(distractors, licks, delay=1):
     
     if np.isnan(pdp)[-1] == 1: 
         distracted_boolean_array[-1] = True
+        
+    if len(pre_dp) == len(pdp) == len(distracted_boolean_array):
+        pass
+    else:
+        print('Numbers of pdps, pre-dps and distractors do not match. Something might be wrong')
     
-    return [distracted, notdistracted], distracted_boolean_array, pdp
+    return [distracted, notdistracted], distracted_boolean_array, pdp, pre_dp
