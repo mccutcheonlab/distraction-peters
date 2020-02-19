@@ -5,4 +5,6 @@ data/*
 figs/*
 output/*
 
+notebooks/.ipynb_checkpoints/*
+
 *.pyc
