@@ -22,6 +22,17 @@ def correctforbaseline(blue, uv):
     
     return datafilt
 
+def lerner_correction(blue, uv):
+    x = np.array(uv)
+    y = np.array(blue)
+    bls = np.polyfit(x, y, 1)
+    Y_fit_all = np.multiply(bls[0], x) + bls[1]
+    Y_dF_all = y - Y_fit_all
+    dFF = np.multiply(100, np.divide(Y_dF_all, Y_fit_all))
+    std_dFF = np.std(dFF)
+    
+    return [dFF, std_dFF]
+
 def remcheck(val, range1, range2):
     # function checks whether value is within range of two decimels
     if (range1 < range2):

@@ -75,7 +75,10 @@ def process_rat(row_data, sessiontype='dis'):
     
     # gets photometry signals from TDT file and performs correction
     blue, uv, fs, ttls = loaddata(row_data[0], row_data[12], row_data[13])   
-    filt = correctforbaseline(blue, uv)
+    
+    # first line uses Vaibhav correction, second uses Lerner correction
+    # filt = correctforbaseline(blue, uv)
+    filt, filt_sd = lerner_correction(blue, uv)
     
     # assigns photometry data to output dictionary
     ratdata['blue'] = blue
@@ -83,6 +86,10 @@ def process_rat(row_data, sessiontype='dis'):
     ratdata['fs'] = fs
     ratdata['filt'] = filt
     ratdata['tick'] = ttls.Tick.onset
+    
+    try:
+        ratdata['filt_sd'] = filt_sd
+    except: pass
     
     # gets licks from ttls
     lick = getattr(ttls, row_data[15])    
