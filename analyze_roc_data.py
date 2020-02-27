@@ -72,6 +72,13 @@ pickle_in = open(outputfolder+"data4roc_licks.pickle", 'rb')
 # a, p = run_roc_comparison([mod_notdis_hist, dis_notdis_hist], n4shuf=2000,
 #                           savedata=outputfolder+"roc_licks_notdistrials_modVdis.pickle")
 
+# Comparison of lick data between distraction and habituation day for ALL trials 
+
+dis_all_hist = dis_notdis_hist + dis_dis_hist
+hab_all_hist = hab_notdis_hist + hab_dis_hist
+# a, p = run_roc_comparison([dis_all_hist, hab_all_hist], n4shuf=2000,
+#                           savedata=outputfolder+"roc_licks_alltrials_disVhab.pickle")
+
 
 # Loads data for ROC analysis on photometry snips
 pickle_in = open(outputfolder+"data4roc_photo.pickle", 'rb')

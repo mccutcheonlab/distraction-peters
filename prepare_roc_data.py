@@ -41,6 +41,7 @@ def flatten_list(listoflists):
         print('Cannot flatten list. Maybe is in the wrong format. Returning empty list.')
         return []
 
+
 def check_val_between(data, x1=0.001, x2=1.000):
     """ Checks if there is a value in a list between two numbers"""
     
@@ -104,6 +105,10 @@ for rat in rats:
     
     d = habDict[rat]
     hab_lick_snips.append(make_lick_snips(d))
+    
+pickle_out = open(outputfolder+"data4epochs_licks.pickle", 'wb')
+dill.dump([mod_lick_snips, dis_lick_snips, hab_lick_snips], pickle_out)
+pickle_out.close()
 
 # flattens lists so that trials from all rats are pooled
 mod_lick_snips_flat = flatten_list(mod_lick_snips)
@@ -140,11 +145,10 @@ hab_dis_hist = [np.histogram(snip, bins=bins)[0] for snip in hab_dis_snips]
 hab_notdis_hist = [np.histogram(snip, bins=bins)[0] for snip in hab_notdis_snips]
 
 # Saves lick histograms for each day for further ROC analysis
-savefile=True
-if savefile:
-    pickle_out = open(outputfolder+"data4roc_licks.pickle", 'wb')
-    dill.dump([mod_dis_hist, mod_notdis_hist, dis_dis_hist, dis_notdis_hist, hab_dis_hist, hab_notdis_hist], pickle_out)
-    pickle_out.close()
+
+pickle_out = open(outputfolder+"data4roc_licks.pickle", 'wb')
+dill.dump([mod_dis_hist, mod_notdis_hist, dis_dis_hist, dis_notdis_hist, hab_dis_hist, hab_notdis_hist], pickle_out)
+pickle_out.close()
 
 
 
@@ -179,6 +183,10 @@ for rat in rats:
     
     snips_notdis = resample_snips(d['snips_not-distracted']['filt_z'])
     hab_notdis_photo_snips.append(snips_notdis)
+    
+pickle_out = open(outputfolder+"data4epochs_photo.pickle", 'wb')
+dill.dump([ mod_dis_photo_snips, mod_notdis_photo_snips, dis_dis_photo_snips, dis_notdis_photo_snips, hab_dis_photo_snips, hab_notdis_photo_snips], pickle_out)
+pickle_out.close()
 
 # flattens all lists
 mod_dis_photo_snips_flat = flatten_list(mod_dis_photo_snips)
@@ -199,8 +207,9 @@ print(f"Number of DISTRACTED trials on HABITUATION day is {len(hab_dis_photo_sni
 print(f"Number of NOT DISTRACTED trials on HABITUATION day is {len(hab_notdis_photo_snips_flat)}")
 
 # Saves resampled and flattened photo data for each day for further ROC analysis
-savefile=True
-if savefile:
-    pickle_out = open(outputfolder+"data4roc_photo.pickle", 'wb')
-    dill.dump([mod_dis_photo_snips_flat, mod_notdis_photo_snips_flat, dis_dis_photo_snips_flat, dis_notdis_photo_snips_flat, hab_dis_photo_snips_flat, hab_notdis_photo_snips_flat], pickle_out)
-    pickle_out.close()
+
+pickle_out = open(outputfolder+"data4roc_photo.pickle", 'wb')
+dill.dump([mod_dis_photo_snips_flat, mod_notdis_photo_snips_flat, dis_dis_photo_snips_flat, dis_notdis_photo_snips_flat, hab_dis_photo_snips_flat, hab_notdis_photo_snips_flat], pickle_out)
+pickle_out.close()
+    
+    
