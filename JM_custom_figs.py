@@ -738,7 +738,7 @@ def shadedError(ax, yarray, linecolor='black', errorcolor = 'xkcd:silver', linew
     y = np.mean(yarray, axis=0)
     yerror = np.std(yarray)/np.sqrt(len(yarray))
     x = np.arange(0, len(y))
-    ax.plot(x, y, color=linecolor, linewidth=1)
+    ax.plot(x, y, color=linecolor, linewidth=linewidth)
     ax.fill_between(x, y-yerror, y+yerror, color=errorcolor, alpha=0.4)
     
     return ax
