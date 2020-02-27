@@ -50,7 +50,7 @@ def logical_subset(data, logical, condition=True):
     else:
         return [d for d, L in zip(data, logical) if not L]
     
-def rocshuf(x,y,nsims=500):
+def rocshuf(x,y,nsims=10):
     z = x + y
     b = [True for val in x] + [False for val in y]
     n0 = len(b)
