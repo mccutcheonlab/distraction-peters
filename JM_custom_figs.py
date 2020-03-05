@@ -64,6 +64,7 @@ def barscatter(data, transpose = False, unequal=False,
                 show_legend = 'none',
                 legendloc='upper right',
                 xfontsize=8,
+                barbaseline=0,
                 ax=[]):
 
     if unequal == True:
@@ -157,8 +158,9 @@ def barscatter(data, transpose = False, unequal=False,
     for x, y, bfc, bec in zip(xvals.flatten(), barMeans.flatten(),
                               barfacecolorArray, baredgecolorArray):
         barx.append(x)
-        barlist.append(ax.bar(x, y, barwidth,
+        barlist.append(ax.bar(x, y-barbaseline, barwidth,
                          facecolor = bfc, edgecolor = bec,
+                         bottom=barbaseline,
                          zorder=-1))
     
     # Uncomment these lines to show method for changing bar colors outside of
