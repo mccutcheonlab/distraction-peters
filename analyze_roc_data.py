@@ -109,3 +109,9 @@ hab_all_photo_snips_flat = hab_dis_photo_snips_flat + hab_notdis_photo_snips_fla
 # a, p = run_roc_comparison([hab_notdis_photo_snips_flat, hab_dis_photo_snips_flat], n4shuf=2000,
 #                           savedata=outputfolder+"roc_photo_habday_disVnotdis.pickle")
 
+# a, p = run_roc_comparison([dis_dis_photo_snips_flat, hab_dis_photo_snips_flat], n4shuf=2000,
+#                           savedata=outputfolder+"roc_photo_distrials_disVhab.pickle")
+
+# a, p = run_roc_comparison([dis_notdis_photo_snips_flat, hab_notdis_photo_snips_flat], n4shuf=2000,
+#                           savedata=outputfolder+"roc_photo_notdistrials_disVhab.pickle")
+
